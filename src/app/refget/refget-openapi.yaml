@@ -7,6 +7,7 @@
 # * nested ServiceInfo under service property
 # * renamed circular_locations to circular_supported
 # * indented required block on metadata componenet
+# * sequence `end` minimum changed to 0 (as required by compliance suite!)
 
 openapi: 3.0.0
 servers:
@@ -29,7 +30,7 @@ tags:
   - name: Services
     description: Housekeeping services
 paths:
-  /sequence/service-info/:
+  /sequence/service-info:
     get:
       summary: Retrieve a summary of features this API deployment supports
       operationId: app.refget.routes.serviceInfo.get
@@ -85,7 +86,7 @@ paths:
           schema:
             type: integer
             format: int32
-            minimum: 1
+            minimum: 0
         - in: header
           name: Range
           required: false

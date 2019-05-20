@@ -2,17 +2,24 @@
 
 """
 
-from pkg_resources import resource_filename
+import logging
+
+from pkg_resources import get_distribution
 
 import coloredlogs
 import connexion
 from flask import Flask, redirect
 
 
+_logger = logging.getLogger(__name__)
+__version__ = get_distribution("seqrepo-rest-service").version
+
+
 def main():
     coloredlogs.install(level="INFO")
 
     cxapp = connexion.App(__name__, debug=True)
+    cxapp.app.url_map.strict_slashes = False
 
     spec_fn = "refget/refget-openapi.yaml"
     cxapp.add_api(spec_fn,

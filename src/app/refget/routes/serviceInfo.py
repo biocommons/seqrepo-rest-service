@@ -3,6 +3,8 @@ from ...threadglobals import get_seqrepo
 import biocommons.seqrepo 
 import bioutils
 
+from pkg_resources import get_distribution
+
 
 def get():
     sr = get_seqrepo()
@@ -15,6 +17,10 @@ def get():
             "supported_api_versions": ["1.0"],
         },
         "x-config": {
+            "seqrepo-rest-service": {
+                "version": get_distribution("seqrepo-rest-service").version,
+                "url": "https://github.com/biocommons/seqrepo-rest-service/",
+                },
             "seqrepo": {
                 "version": biocommons.seqrepo.__version__,
                 "root": sr._root_dir,
