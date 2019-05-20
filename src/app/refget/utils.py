@@ -1,6 +1,9 @@
 from base64 import urlsafe_b64decode, urlsafe_b64encode
 from binascii import hexlify, unhexlify
+from http.client import responses as http_responses
 import re
+
+import connexion
 
 from bioutils.accessions import infer_namespaces
 
@@ -35,6 +38,11 @@ def get_sequence_id(sr, query):
     if len(seq_ids) > 1:
         raise RuntimeError(f"Multiple distinct sequences found for {query}")
     return seq_ids.pop()
+
+
+def problem(status, message):
+    return connexion.problem(status=status, title=http_responses[status], detail=message)
+
 
 
 ############################################################################
