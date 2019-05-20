@@ -18,16 +18,16 @@ def get(id, start=None, end=None):
     if seq_id is None:
         return NoContent, 404
 
-    header = request.headers.get("Range", None)
-    if header:
-        _logger.info(f"Received header `Range: {header}`")
+    range_header = request.headers.get("Range", None)
+    if range_header:
+        _logger.info(f"Received header `Range: {range_header}`")
         if start is not None or end is not None:
             return problem(400, "May not send Range header with start and/or end query parameter")
-        m = range_re.match(header)
+        m = range_re.match(range_header)
         if not m:
-            return problem(400, f"Could not parse range header {header}")
+            return problem(400, f"Could not parse range header {range_header}")
         start, end = map(int, m.groups())
-        _logger.info(f"Parsed `{header}` as ({start}, {end}")
+        _logger.info(f"Parsed `{range_header}` as ({start}, {end}")
         
     seqinfo = sr.sequences.fetch_seqinfo(seq_id)
     
@@ -38,7 +38,8 @@ def get(id, start=None, end=None):
             return problem(416, "Invalid coordinates: must obey 0 <= start <= end <= sequence_length")
 
     try:
-        return sr.sequences.fetch(seq_id, start, end)
+        status = 206 if range_header else 200
+        return sr.sequences.fetch(seq_id, start, end), status
     except KeyError:
         return NoContent, 404
     
