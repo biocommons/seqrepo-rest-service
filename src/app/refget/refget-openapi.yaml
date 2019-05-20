@@ -1,3 +1,13 @@
+# refget OpenAPI spec
+# Derived from
+# https://github.com/samtools/hts-specs/blob/master/pub/refget-openapi.yaml
+# With fixes to make it comport with spec here:
+# https://samtools.github.io/hts-specs/refget.html
+# * removed dangling quote from /sequence/service-info/ path
+# * nested ServiceInfo under service property
+# * renamed circular_locations to circular_supported
+# * indented required block on metadata componenet
+
 openapi: 3.0.0
 servers:
   - url: '/refget/1'
