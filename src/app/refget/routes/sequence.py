@@ -13,25 +13,28 @@ range_re = re.compile("^bytes=(\d+)-(\d+)$")
 
 
 def get(id, start=None, end=None):
-    sr = get_seqrepo()
-    seq_id = get_sequence_id(sr, id)
-    if seq_id is None:
-        return NoContent, 404
-
     range_header = request.headers.get("Range", None)
     if range_header:
-        _logger.info(f"Received header `Range: {range_header}`")
+        _logger.debug(f"Received header `Range: {range_header}`")
         if start is not None or end is not None:
             return problem(400, "May not send Range header with start and/or end query parameter")
         m = range_re.match(range_header)
         if not m:
             return problem(400, f"Could not parse range header {range_header}")
         start, end = map(int, m.groups())
-        _logger.info(f"Parsed `{range_header}` as ({start}, {end}")
+        _logger.debug(f"Parsed `{range_header}` as ({start}, {end})")
         
+    sr = get_seqrepo()
+    seq_id = get_sequence_id(sr, id)
+    if not seq_id:
+        return NoContent, 404
     seqinfo = sr.sequences.fetch_seqinfo(seq_id)
-    
+   
     if start is not None and end is not None:
+        if start >= seqinfo["len"]:
+            return problem(416, "Invalid coordinates: start > sequence length")
+        if end > seqinfo["len"]:
+            return problem(416, "Invalid coordinates: end > sequence length")
         if start > end:
             return problem(501, "Invalid coordinates: start > end")
         if not (0 <= start <= end <= seqinfo["len"]):

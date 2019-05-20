@@ -1,11 +1,15 @@
 from base64 import urlsafe_b64decode, urlsafe_b64encode
 from binascii import hexlify, unhexlify
 from http.client import responses as http_responses
+import logging
 import re
 
 import connexion
 
 from bioutils.accessions import infer_namespaces
+
+
+_logger = logging.getLogger(__name__)
 
 
 def hex_to_base64url(s):
@@ -25,7 +29,8 @@ def get_sequence_id(sr, query):
     The first match will be returned.
     """
 
-    for ns, a in _generate_nsa_options(query):
+    nsa_options = _generate_nsa_options(query)
+    for ns, a in nsa_options:
         if ns == "refseq":      # TODO: Resolve seqrepo to just one
             ns = "RefSeq"
         aliases = list(sr.aliases.find_aliases(namespace=ns, alias=a))
@@ -34,10 +39,11 @@ def get_sequence_id(sr, query):
     seq_ids = set(a["seq_id"] for a in aliases)
     
     if len(seq_ids) == 0:
+        _logger.warning(f"No sequence found for {query}; options: {nsa_options}")
         return None
     if len(seq_ids) > 1:
         raise RuntimeError(f"Multiple distinct sequences found for {query}")
-    return seq_ids.pop()
+    return seq_ids.pop()        # exactly 1 id found
 
 
 def problem(status, message):

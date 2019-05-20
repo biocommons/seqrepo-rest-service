@@ -1,9 +1,9 @@
 import logging
 
-from connexion import NoContent
+from connexion import NoContent, request
 
 from ...threadglobals import get_seqrepo
-from ..utils import get_sequence_id, base64url_to_hex
+from ..utils import get_sequence_id, base64url_to_hex, problem
 
 
 _logger = logging.getLogger(__name__)
@@ -12,10 +12,8 @@ _logger = logging.getLogger(__name__)
 def get(id):
     sr = get_seqrepo()
     seq_id = get_sequence_id(sr, id)
-
     if not seq_id:
         return NoContent, 404
-
     seqinfo = sr.sequences.fetch_seqinfo(seq_id)
     aliases = sr.aliases.fetch_aliases(seq_id)
 
