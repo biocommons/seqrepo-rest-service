@@ -11,6 +11,8 @@ from flask import Flask, redirect
 
 
 def main():
+    logging.basicConfig(level="INFO")
+
     cxapp = connexion.App(__name__, debug=True)
 
     spec_fn = "refget/refget-openapi.yaml"
