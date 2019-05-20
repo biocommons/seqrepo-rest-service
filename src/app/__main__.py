@@ -2,16 +2,15 @@
 
 """
 
-import logging
-
 from pkg_resources import resource_filename
 
+import coloredlogs
 import connexion
 from flask import Flask, redirect
 
 
 def main():
-    logging.basicConfig(level="INFO")
+    coloredlogs.install(level="INFO")
 
     cxapp = connexion.App(__name__, debug=True)
 
