@@ -2,7 +2,7 @@ import logging
 
 from connexion import NoContent
 
-from ..globals import get_seqrepo
+from ...threadglobals import get_seqrepo
 from ..utils import get_sequence_id
 
 

@@ -1,4 +1,4 @@
-from ..globals import get_seqrepo
+from ...threadglobals import get_seqrepo
 
 import biocommons.seqrepo 
 import bioutils
