@@ -21,8 +21,10 @@ def get(id, start=None, end=None):
         m = range_re.match(range_header)
         if not m:
             return problem(400, f"Could not parse range header {range_header}")
-        start, end = map(int, m.groups())
+        start, end = int(m.group(1)), int(m.group(2)) + 1
         _logger.debug(f"Parsed `{range_header}` as ({start}, {end})")
+        if start > end:
+            return problem(416, f"Range queries may specify start > end")
         
     sr = get_seqrepo()
     seq_id = get_sequence_id(sr, id)
@@ -33,15 +35,16 @@ def get(id, start=None, end=None):
     if start is not None and end is not None:
         if start >= seqinfo["len"]:
             return problem(416, "Invalid coordinates: start > sequence length")
-        if end > seqinfo["len"]:
+        if end > seqinfo["len"] and not range_header:
+            # NB Compliance tests imply that end may be > len if in range header
             return problem(416, "Invalid coordinates: end > sequence length")
         if start > end:
             return problem(501, "Invalid coordinates: start > end")
-        if not (0 <= start <= end <= seqinfo["len"]):
+        if not (0 <= start <= end <= seqinfo["len"]) and not range_header:
             return problem(416, "Invalid coordinates: must obey 0 <= start <= end <= sequence_length")
 
     try:
-        status = 206 if range_header else 200
+        status = 206 if ((start or end) and range_header) else 200
         return sr.sequences.fetch(seq_id, start, end), status
     except KeyError:
         return NoContent, 404
