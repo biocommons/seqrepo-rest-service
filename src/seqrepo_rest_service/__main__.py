@@ -4,7 +4,7 @@
 
 import logging
 
-from pkg_resources import get_distribution
+from pkg_resources import get_distribution, resource_filename
 
 import coloredlogs
 import connexion
@@ -21,7 +21,7 @@ def main():
     cxapp = connexion.App(__name__, debug=True)
     cxapp.app.url_map.strict_slashes = False
 
-    spec_fn = "refget/refget-openapi.yaml"
+    spec_fn = resource_filename(__name__, "refget/refget-openapi.yaml")
     cxapp.add_api(spec_fn,
                   validate_responses=True,
                   strict_validation=True)
