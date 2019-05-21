@@ -3,13 +3,18 @@ import logging
 from connexion import NoContent, request
 
 from ...threadglobals import get_seqrepo
-from ..utils import get_sequence_id, base64url_to_hex, problem
+from ..utils import get_sequence_id, base64url_to_hex, problem, valid_content_types
 
 
 _logger = logging.getLogger(__name__)
 
 
 def get(id):
+    accept_header = request.headers.get("Accept", None)
+    if accept_header and accept_header not in valid_content_types:
+        _logger.warn(f"{accept_header} not valid")
+        return problem(406, "Invalid Accept header")
+    
     sr = get_seqrepo()
     seq_id = get_sequence_id(sr, id)
     if not seq_id:

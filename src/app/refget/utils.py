@@ -12,6 +12,16 @@ from bioutils.accessions import infer_namespaces
 _logger = logging.getLogger(__name__)
 
 
+# we return any of these (and accept in Accept header)
+valid_content_types = [
+    "application/vnd.ga4gh.refget.v1.0.0+json",
+    "text/vnd.ga4gh.refget.v1.0.0+plain",
+    "application/json",
+    "text/plain",
+    "*/*",
+    ]
+
+
 def hex_to_base64url(s):
     return urlsafe_b64encode(unhexlify(s)).decode("ascii")
 

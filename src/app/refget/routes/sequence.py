@@ -4,7 +4,7 @@ import re
 from connexion import NoContent, request
 
 from ...threadglobals import get_seqrepo
-from ..utils import get_sequence_id, problem
+from ..utils import get_sequence_id, problem, valid_content_types
 
 
 _logger = logging.getLogger(__name__)
@@ -13,6 +13,10 @@ range_re = re.compile("^bytes=(\d+)-(\d+)$")
 
 
 def get(id, start=None, end=None):
+    accept_header = request.headers.get("Accept", None)
+    if accept_header and accept_header not in valid_content_types:
+        return problem(406, "Invalid Accept header")
+    
     range_header = request.headers.get("Range", None)
     if range_header:
         _logger.debug(f"Received header `Range: {range_header}`")

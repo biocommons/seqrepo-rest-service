@@ -40,7 +40,7 @@ paths:
         '200':
           description: Display of all known configurations for a service deployment
           content:
-            application/json:
+            text/vnd.ga4gh.refget.v1.0.0+json:
               schema:
                 $ref: '#/components/schemas/ServiceInfo'
         '415':
@@ -102,7 +102,7 @@ paths:
             Successful retrieval of sequence. Returned as a single string with
             no line breaks
           content:
-            text/plain:
+            text/vnd.ga4gh.refget.v1.0.0+plain:
               schema:
                 type: string
                 example: >-
@@ -144,7 +144,7 @@ paths:
         '200':
           description: Successful retrieval of sequence metadata
           content:
-            application/json:
+            text/vnd.ga4gh.refget.v1.0.0+json:
               schema:
                 $ref: '#/components/schemas/Metadata'
         '404':
