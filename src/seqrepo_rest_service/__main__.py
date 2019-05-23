@@ -3,6 +3,7 @@
 """
 
 import logging
+import os
 
 from pkg_resources import get_distribution, resource_filename
 
@@ -17,6 +18,9 @@ __version__ = get_distribution("seqrepo-rest-service").version
 
 def main():
     coloredlogs.install(level="INFO")
+
+    if "SEQREPO_DIR" not in os.environ:
+        _logger.warn("SEQREPO_DIR is undefined; rest service will use `latest`")
 
     cxapp = connexion.App(__name__, debug=True)
     cxapp.app.url_map.strict_slashes = False

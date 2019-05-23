@@ -1,27 +1,18 @@
 # refget OpenAPI spec
-# Derived from
-# https://github.com/samtools/hts-specs/blob/master/pub/refget-openapi.yaml
-# With fixes to make it comport with spec here:
-# https://samtools.github.io/hts-specs/refget.html
-# * removed dangling quote from /sequence/service-info/ path
-# * nested ServiceInfo under service property
-# * renamed circular_locations to circular_supported
-# * indented required block on metadata componenet
-# * sequence `end` minimum changed to 0 (as required by compliance suite!)
 
 openapi: 3.0.0
 servers:
-  - url: '/refget/1'
+  - url: /refget/1
 info:
   description: >-
     System for retrieving sequence and metadata concerning a reference sequence
     object by hash identifiers
-  version: '1.0.0'
-  title: refget API
+  version: 1.0.0
+  title: Seqrepo refget API
   contact:
-    name: GA4GH Security Notifications
-    email: security-notification@ga4gh.org
-    url: https://www.ga4gh.org/
+    name: biocommons
+    email: biocommons-dev@googlegroups.com
+    url: https://github.com/biocommons/seqrepo-rest-interface
 tags:
   - name: Metadata
     description: Services linked to retrieving metadata from an identifier
@@ -37,13 +28,13 @@ paths:
       tags:
         - Services
       responses:
-        '200':
+        200:
           description: Display of all known configurations for a service deployment
           content:
-            text/vnd.ga4gh.refget.v1.0.0+json:
+            application/vnd.ga4gh.refget.v1.0.0+json:
               schema:
                 $ref: '#/components/schemas/ServiceInfo'
-        '415':
+        415:
           $ref: '#/components/responses/BadFormat'
   /ping:
     get:
@@ -53,11 +44,11 @@ paths:
       tags:
         - Services
       responses:
-        '200':
+        200:
           description: Display a ping message
-        '415':
+        415:
           $ref: '#/components/responses/BadFormat'
-  '/sequence/{id}':
+  /sequence/{id}:
     get:
       summary: Get a sequence from a hash
       operationId: seqrepo_rest_service.refget.routes.sequence.get
@@ -72,7 +63,6 @@ paths:
           required: true
           schema:
             type: string
-            default: 6681ac2f62509cfc220d78751b8dc524
         - in: query
           name: start
           description: Request a subsequence of the data (0-based)
@@ -97,7 +87,7 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        200:
           description: >-
             Successful retrieval of sequence. Returned as a single string with
             no line breaks
@@ -107,25 +97,25 @@ paths:
                 type: string
                 example: >-
                   MSSPTPPGGQRTLQKRKQGSSQKVAASAPKKNTNSNNSILKIYSDEATGLRVDPLVVLFLAVGFIFSVVALHVISKVAGKLF
-        '206':
+        206:
           description: Successful retrieval of subsequence as a single string with no line breaks
-        '302':
+        302:
           description: Redirecting the client where the sequence can be retrieved
-        '303':
+        303:
           description: Redirecting the client where the sequence can be retrieved
-        '307':
+        307:
           description: Redirecting the client where the sequence can be retrieved
-        '400':
+        400:
           description: Invalid input; normally due to range parameter usage
-        '404':
+        404:
           description: Sequence was not found
-        '415':
+        415:
           $ref: '#/components/responses/BadFormat'
-        '416':
+        416:
           description: Invalid range request specified
-        '501':
+        501:
           description: The specified request is not supported by the server          
-  '/sequence/{id}/metadata':
+  /sequence/{id}/metadata:
     get:
       summary: Get reference metadata from a hash
       description: Retrieve a metadata about a reference sequence using a hash identifier
@@ -139,17 +129,17 @@ paths:
           description: The identifier to use. Should be a checksum hash
           schema:
             type: string
-            default: 6681ac2f62509cfc220d78751b8dc524
+            example: 6681ac2f62509cfc220d78751b8dc524
       responses:
-        '200':
+        200:
           description: Successful retrieval of sequence metadata
           content:
-            text/vnd.ga4gh.refget.v1.0.0+json:
+            application/vnd.ga4gh.refget.v1.0.0+json:
               schema:
                 $ref: '#/components/schemas/Metadata'
-        '404':
+        404:
           description: Sequence hash was not found
-        '415':
+        415:
           $ref: '#/components/responses/BadFormat'
 components:
   responses:
@@ -168,7 +158,7 @@ components:
             id:
               type: string
               description: Query identifier. Normally the default checksum for a given service
-              example: 6681ac2f62509cfc220d78751b8dc524
+              example: refseq:NM_000551.3
             md5:
               type: string
               description: MD5 checksum of the reference sequence
