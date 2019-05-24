@@ -32,7 +32,7 @@ Running a local instance
 
 Once installed as above, you should be able to::
 
-  $ seqrepo-rest-service
+  $ SEQREPO_DIR=/usr/local/share/seqrepo/latest seqrepo-rest-service
 
 The navigate to the URL shown in the console output.
 
