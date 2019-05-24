@@ -4,7 +4,7 @@ import re
 from connexion import NoContent, request
 
 from ...threadglobals import get_seqrepo
-from ..utils import get_sequence_id, problem, valid_content_types
+from ...utils import get_sequence_id, problem, valid_content_types
 
 
 _logger = logging.getLogger(__name__)

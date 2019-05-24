@@ -14,6 +14,4 @@ RUN python3 setup.py install
 
 EXPOSE 5000
 
-ENV LANG=en_US.UTF-8
-
 CMD ["seqrepo-rest-service"]
