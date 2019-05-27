@@ -165,9 +165,17 @@ components:
               type: array
               items:
                 type: string
+            alphabet:
+              type: string
+              nullable: true
+            added:
+              type: string
+              nullable: true
           required:
             - length
             - aliases
+            - alphabet
+            - added
       example:
         metadata:
           aliases:
@@ -204,3 +212,5 @@ components:
           - VMC:GS_Ya6Rs7DHhDeg7YaOSg1EoNi3U_nQ9SvO
           - genbank:CM000663.2
           length: 248956422
+          alphabet: ACGMNRT
+          added: 2016-08-27T21:17:00Z

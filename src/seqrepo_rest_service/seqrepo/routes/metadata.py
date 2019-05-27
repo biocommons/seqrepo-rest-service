@@ -26,8 +26,10 @@ def get(alias):
     md5_id = md5_rec[0]["alias"] if md5_rec else None
 
     md = {
+        "added": seqinfo["added"],
+        "aliases": [f"{a['namespace']}:{a['alias']}" for a in aliases],
+        "alphabet": seqinfo["alpha"],
         "length": seqinfo["len"],
-        "aliases": [f"{a['namespace']}:{a['alias']}" for a in aliases]
         }
 
     return {"metadata": md}, 200
