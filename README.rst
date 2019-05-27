@@ -40,10 +40,13 @@ The navigate to the URL shown in the console output.
 Running a docker image
 @@@@@@@@@@@@@@@@@@@@@@
 
-A docker image is available.  It expects to have a local seqrepo
-instance installed.  Invoke like this::
+A docker image is available.  It expects to have a local `seqrepo
+<https://github.com/biocommons/biocommons.seqrepo/>`__ instance
+installed.  Invoke like this::
 
-  $ docker run --rm -t \
-  -p 5000:5000 \
+  $ docker run \
+  --name seqrepo-rest-service \
+  --detach --rm -p 5000:5000 \
   -v /usr/local/share/seqrepo/:/usr/local/share/seqrepo/ \
-  biocommons:seqrepo-rest-interface
+  biocommons/seqrepo-rest-service
+  
