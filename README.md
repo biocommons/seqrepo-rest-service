@@ -20,7 +20,14 @@ Links: [Issues](https://github.com/biocommons/seqrepo-rest-service/issues) | [Do
 
 ### OpenAPI docs
 
-![OpenAPI UI Screenshot](docs/images/seqrepo-api-ui.png)
+The REST interface is implemented with OpenAPI. Current and
+interactive documentation is available at the base url for the
+endpoint.
+
+<div style="border:thin solid gray; width:80%; margin: 0 auto">
+  <img alt="OpenAPI UI Screenshot" src="docs/images/seqrepo-api-ui.png"/>
+</div>
+
 
 ### Fetch Sequence
 
