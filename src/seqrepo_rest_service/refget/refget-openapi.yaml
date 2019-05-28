@@ -129,7 +129,7 @@ paths:
           description: The identifier to use. Should be a checksum hash
           schema:
             type: string
-            example: 6681ac2f62509cfc220d78751b8dc524
+            example: 1b22b98cdeb4a9304cb5d48026a85128
       responses:
         200:
           description: Successful retrieval of sequence metadata
@@ -162,13 +162,13 @@ components:
             md5:
               type: string
               description: MD5 checksum of the reference sequence
-              example: 6681ac2f62509cfc220d78751b8dc524
+              example: 1b22b98cdeb4a9304cb5d48026a85128
             trunc512:
               type: string
               description: >-
                 Truncated, to 48 characters, SHA-512 checksum of the reference
                 sequence encoded as a HEX string
-              example: 959cb1883fc1ca9ae1394ceb475a356ead1ecceff5824ae7
+              example: 4bf2a39c5573f8513b3345baca86940e06312cf7358f2594
             length:
               type: integer
               format: int64
