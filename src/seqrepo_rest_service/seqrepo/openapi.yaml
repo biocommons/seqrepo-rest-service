@@ -122,6 +122,8 @@ paths:
                   MSSPTPPGGQRTLQKRKQGSSQKVAASAPKKNTNSNNSILKIYSDEATGLRVDPLVVLFLAVGFIFSVVALHVISKVAGKLF
         404:
           description: NOT FOUND; sequence does not exist
+        422:
+          description: UNPROCESSABLE ENTITY; request was understood, but is invalid
 
   /metadata/{alias}:
     get:
@@ -147,6 +149,8 @@ paths:
                 $ref: "#/components/schemas/Metadata"
         404:
           description: NOT FOUND; sequence does not exist
+        422:
+          description: UNPROCESSABLE ENTITY; request was understood, but is invalid
 
 components:
   schemas:

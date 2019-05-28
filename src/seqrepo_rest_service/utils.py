@@ -36,6 +36,28 @@ def get_sequence_id(sr, query):
       * A digest or digest prefix from VMC, TRUNC512, or MD5
       * A sequence accession (without namespace)
  
+    Returns None if not found; seq_id if only one match; raises
+    RuntimeError for ambiguous matches. 
+
+    """
+    
+    seq_ids = get_sequence_ids(sr, query)
+    if len(seq_ids) == 0:
+        _logger.warning(f"No sequence found for {query}")
+        return None
+    if len(seq_ids) > 1:
+        raise RuntimeError(f"Multiple distinct sequences found for {query}")
+    return seq_ids.pop()        # exactly 1 id found
+
+
+def get_sequence_ids(sr, query):
+    """determine sequence_ids after guessing form of query
+
+    The query may be:
+      * A fully-qualified sequence alias (e.g., VMC:0123 or refseq:NM_01234.5)
+      * A digest or digest prefix from VMC, TRUNC512, or MD5
+      * A sequence accession (without namespace)
+ 
     The first match will be returned.
     """
 
@@ -46,14 +68,8 @@ def get_sequence_id(sr, query):
         aliases = list(sr.aliases.find_aliases(namespace=ns, alias=a))
         if aliases:
             break
-    seq_ids = set(a["seq_id"] for a in aliases)
-    
-    if len(seq_ids) == 0:
-        _logger.warning(f"No sequence found for {query}; options: {nsa_options}")
-        return None
-    if len(seq_ids) > 1:
-        raise RuntimeError(f"Multiple distinct sequences found for {query}")
-    return seq_ids.pop()        # exactly 1 id found
+    seq_ids = list(set(a["seq_id"] for a in aliases))
+    return seq_ids
 
 
 def problem(status, message):
@@ -90,12 +106,14 @@ def _generate_nsa_options(query):
         nsa_options = [(ns, query) for ns in namespaces]
         return nsa_options
     
+    # The following logic is for short-term compatibility only.  It
+    # should be dropped or moved to seqrepo for official support
     if query.startswith("GS_"):
         nsa_options = [("VMC", query + "%")]
         return nsa_options
     
     # if hex, try md5 and TRUNC512
-    if re.match(r"^(?:[0-9A-Fa-f]+)$", query):
+    if re.match(r"^(?:[0-9A-Fa-f]{8,})$", query):
         nsa_options = [("MD5", query + "%")]
         # TRUNC512 isn't in seqrepo; synthesize equivalent VMC
         id_b64u = hex_to_base64url(query)
