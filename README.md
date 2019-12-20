@@ -3,17 +3,29 @@
 Provides an OpenAPI-based REST interface to biological sequences and
 sequence metadata.
 
-Clients refer to sequences and metadata using familiar identifiers, such as NM_000551.3 or GRCh38:1, or any of several hash-based identifiers.  The interface supports fast slicing of arbitrary regions of large sequences.
+Clients refer to sequences and metadata using familiar identifiers,
+such as NM_000551.3 or GRCh38:1, or any of several hash-based
+identifiers.  The interface supports fast slicing of arbitrary regions
+of large sequences.
 
-A "fully-qualified" identifier includes a namespace to disambiguate accessions (e.g., "1" in GRCh37 and GRCh38). If the namespace is provided, seqrepo uses it as-is.  If the namespace is not provided and the unqualified identifier refers to a unique sequence, it is returned; otherwise, ambiguous identifiers will
-raise an error.
+A "fully-qualified" identifier includes a namespace to disambiguate
+accessions (e.g., "1" in GRCh37 and GRCh38). If the namespace is
+provided, seqrepo uses it as-is.  If the namespace is not provided and
+the unqualified identifier refers to a unique sequence, it is
+returned; otherwise, ambiguous identifiers will raise an error.
 
 This repository is the REST interface only.  The underlying data is
-provided by [seqrepo](https://github.com/biocommons/biocommons.seqrepo/).
+provided by
+[seqrepo](https://github.com/biocommons/biocommons.seqrepo/).
 
-This repository also implements the [GA4GH refget (v1) protocol](https://samtools.github.io/hts-specs/refget.html) at `<baseurl>/refget/`.
+This repository also implements the [GA4GH refget (v1)
+protocol](https://samtools.github.io/hts-specs/refget.html) at
+`<baseurl>/refget/`.
 
-Links: [Issues](https://github.com/biocommons/seqrepo-rest-service/issues) | [Docker image](https://cloud.docker.com/u/biocommons/repository/docker/biocommons/seqrepo-rest-service)
+Links:
+[Issues](https://github.com/biocommons/seqrepo-rest-service/issues) |
+[Docker
+image](https://cloud.docker.com/u/biocommons/repository/docker/biocommons/seqrepo-rest-service)
 
 
 ## Examples
@@ -24,9 +36,9 @@ The REST interface is implemented with OpenAPI. Current and
 interactive documentation is available at the base url for the
 endpoint.
 
-<div style="border:thin solid gray; width:80%; margin: 0 auto">
+<kbd>
   <img alt="OpenAPI UI Screenshot" src="docs/images/seqrepo-api-ui.png"/>
-</div>
+</kbd>
 
 
 ### Fetch Sequence
