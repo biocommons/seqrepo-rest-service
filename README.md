@@ -36,7 +36,7 @@ The REST interface is implemented with OpenAPI. Current and
 interactive documentation is available at the base url for the
 endpoint.
 
-<img style="border:thin solid gray; width:80%; margin:0 auto" alt="OpenAPI UI Screenshot" src="docs/images/seqrepo-api-ui.png"/>
+![OpenAPI UI Screenshot](docs/images/seqrepo-api-ui.png)
 
 
 ### Fetch Sequence
