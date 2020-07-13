@@ -74,11 +74,13 @@ With range:
                 ... 
             "GRCh38.p9:chr1",
             "MD5:6aef897c3d6ff0c78aff06ac189178dd",
-            "RefSeq:NC_000001.11",
+            "NCBI:NC_000001.11",
+            "refseq:NC_000001.11",
             "SEGUID:FCUd6VJ6uikS/VWLbhGdVmj2rOA",
             "SHA1:14251de9527aba2912fd558b6e119d5668f6ace0",
             "VMC:GS_Ya6Rs7DHhDeg7YaOSg1EoNi3U_nQ9SvO",
-            "genbank:CM000663.2"
+            "sha512t24u:Ya6Rs7DHhDeg7YaOSg1EoNi3U_nQ9SvO",
+            "ga4gh:GS.Ya6Rs7DHhDeg7YaOSg1EoNi3U_nQ9SvO"
         ],
         "alphabet": "ACGMNRT",
         "length": 248956422
@@ -102,7 +104,8 @@ The navigate to the URL shown in the console output.
 
 ## Running a docker image
 
-A docker image is available.  It expects to have a local [seqrepo](https://github.com/biocommons/biocommons.seqrepo/) instance
+A docker image is available.  It expects to have a local
+[seqrepo](https://github.com/biocommons/biocommons.seqrepo/) instance
 installed.  Invoke like this:
 
     $ docker run \
