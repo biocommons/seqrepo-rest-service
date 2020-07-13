@@ -29,7 +29,7 @@ except KeyError:
 def get_seqrepo():
     return _get_or_create(
         "seqrepo",
-        lambda: SeqRepo(root_dir=seqrepo_dir, translate_ncbi_namespace=True))
+        lambda: SeqRepo(root_dir=seqrepo_dir))
 
 
 def _get_or_create(k, f):
