@@ -63,8 +63,6 @@ def get_sequence_ids(sr, query):
 
     nsa_options = _generate_nsa_options(query)
     for ns, a in nsa_options:
-        if ns == "refseq":      # TODO: Resolve seqrepo to just one
-            ns = "RefSeq"
         aliases = list(sr.aliases.find_aliases(namespace=ns, alias=a))
         if aliases:
             break
@@ -89,7 +87,7 @@ def _generate_nsa_options(query):
     [('ensembl', 'ENST00000530893.6')]
 
     >>> _generate_nsa_options("gi:123456789")
-    ['gi', '123456789']
+    [('gi', '123456789')]
 
     >>> _generate_nsa_options("01234abcde")
     [('MD5', '01234abcde%'), ('VMC', 'GS_ASNKvN4=%')]
@@ -98,18 +96,12 @@ def _generate_nsa_options(query):
 
     if ":" in query:
         # interpret as fully-qualified identifier
-        nsa_options = [query.split(sep=":", maxsplit=1)]
+        nsa_options = [tuple(query.split(sep=":", maxsplit=1))]
         return nsa_options
 
     namespaces = infer_namespaces(query)
     if namespaces:
         nsa_options = [(ns, query) for ns in namespaces]
-        return nsa_options
-    
-    # The following logic is for short-term compatibility only.  It
-    # should be dropped or moved to seqrepo for official support
-    if query.startswith("GS_"):
-        nsa_options = [("VMC", query + "%")]
         return nsa_options
     
     # if hex, try md5 and TRUNC512

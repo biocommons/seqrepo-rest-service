@@ -30,17 +30,13 @@ info:
 
 
     Examples:
-      * `NM_000551.3`
       * `refseq:NM_000551.3`
-      * `ENST XXX`
-      * `MD5:(md5hash)`
-      * `TRUNC512:...`
-      * `bio:s...`
+      * `NM_000551.3`
       * `MD5:215137b1973c1a5afcf86be7d999574a`
       * `SEGUID:T12L0p2X5E8DbnL0+SwI4Wc1S6g`
       * `SHA1:4f5d8bd29d97e44f036e72f4f92c08e167354ba8`
-      * `VMC:GS_v_QTc1p-MUYdgrRv4LMT6ByXIOsdw3C_`
-      
+      * `ga4gh:GS.v_QTc1p-MUYdgrRv4LMT6ByXIOsdw3C_`
+      * `sha512t24u:v_QTc1p-MUYdgrRv4LMT6ByXIOsdw3C_`
 
     Non-examples:
       * `RefSeq:NM_000551.3`: correct namespace is "refseq"
