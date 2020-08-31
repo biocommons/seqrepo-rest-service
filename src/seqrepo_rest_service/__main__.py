@@ -35,6 +35,7 @@ def main():
     spec_files += [spec_fn]
 
     @cxapp.route('/')
+    @cxapp.route('/seqrepo')
     def seqrepo_ui():
         return redirect("/seqrepo/1/ui/")
 
@@ -48,7 +49,7 @@ def main():
      
     @cxapp.route('/refget')
     def refget_ui():
-        return redirect("/refget/1/ui")
+        return redirect("/refget/1/ui/")
 
     
     _logger.info("Also watching " + str(spec_files))
