@@ -14,6 +14,11 @@ provided, seqrepo uses it as-is.  If the namespace is not provided and
 the unqualified identifier refers to a unique sequence, it is
 returned; otherwise, ambiguous identifiers will raise an error.
 
+SeqRepo favors identifiers from [identifiers.org](identifiers.org)
+whenever available.  Examples include
+[refseq](https://registry.identifiers.org/registry/refseq) and
+[ensembl](https://registry.identifiers.org/registry/ensembl).
+
 This repository is the REST interface only.  The underlying data is
 provided by
 [seqrepo](https://github.com/biocommons/biocommons.seqrepo/).
@@ -21,6 +26,15 @@ provided by
 This repository also implements the [GA4GH refget (v1)
 protocol](https://samtools.github.io/hts-specs/refget.html) at
 `<baseurl>/refget/`.
+
+Released under the Apache License, 2.0.
+
+Citation
+!!!!!!!!
+
+| **SeqRepo: A system for managing local collections of biological sequences.**
+| Hart RK, Prlić A. PLOS One (accepted; 2020)
+| `doi:10.1101/2020.09.16.299495 <https://www.biorxiv.org/content/10.1101/2020.09.16.299495v1>`__
 
 Links:
 [Issues](https://github.com/biocommons/seqrepo-rest-service/issues) |
@@ -64,27 +78,26 @@ With range:
 
 ### Fetch Metadata
 
-        $ curl -f "http://0.0.0.0:5000/seqrepo/1/metadata/GRCh38:1"
-        {
-        "added": "2016-08-27T21:17:00Z",
-        "aliases": [
-            "GRCh38:1",
-            "GRCh38:chr1",
-            "GRCh38.p1:1",
-                ... 
-            "GRCh38.p9:chr1",
-            "MD5:6aef897c3d6ff0c78aff06ac189178dd",
-            "NCBI:NC_000001.11",
-            "refseq:NC_000001.11",
-            "SEGUID:FCUd6VJ6uikS/VWLbhGdVmj2rOA",
-            "SHA1:14251de9527aba2912fd558b6e119d5668f6ace0",
-            "VMC:GS_Ya6Rs7DHhDeg7YaOSg1EoNi3U_nQ9SvO",
-            "sha512t24u:Ya6Rs7DHhDeg7YaOSg1EoNi3U_nQ9SvO",
-            "ga4gh:GS.Ya6Rs7DHhDeg7YaOSg1EoNi3U_nQ9SvO"
-        ],
-        "alphabet": "ACGMNRT",
-        "length": 248956422
-        }
+    $ curl -f "http://0.0.0.0:5000/seqrepo/1/metadata/GRCh38:1"
+    {
+      "added": "2016-08-27T21:17:00Z",
+      "aliases": [
+        "GRCh38:1",
+        "GRCh38:chr1",
+        "GRCh38.p1:1",
+        "GRCh38.p1:chr1",
+		⋮
+        "GRCh38.p9:chr1",
+        "MD5:6aef897c3d6ff0c78aff06ac189178dd",
+        "refseq:NC_000001.11",
+        "SEGUID:FCUd6VJ6uikS/VWLbhGdVmj2rOA",
+        "SHA1:14251de9527aba2912fd558b6e119d5668f6ace0",
+        "sha512t24u:Ya6Rs7DHhDeg7YaOSg1EoNi3U_nQ9SvO",
+        "ga4gh:SQ.Ya6Rs7DHhDeg7YaOSg1EoNi3U_nQ9SvO"
+      ],
+      "alphabet": "ACGMNRT",
+      "length": 248956422
+    }
 
 
 ## Development
