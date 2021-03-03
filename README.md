@@ -29,8 +29,7 @@ protocol](https://samtools.github.io/hts-specs/refget.html) at
 
 Released under the Apache License, 2.0.
 
-Citation
-!!!!!!!!
+## Citation
 
 | **SeqRepo: A system for managing local collections of biological sequences.**
 | Hart RK, Prlić A. PLOS One (accepted; 2020)
