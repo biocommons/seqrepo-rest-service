@@ -1,0 +1,1 @@
+web: gunicorn src.seqrepo-rest-service.__main__:seqrepo-rest-service
