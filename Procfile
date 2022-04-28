@@ -1,1 +1,1 @@
-web: gunicorn src.seqrepo-rest-service.__main__:seqrepo-rest-service
+web: python3 src/seqrepo_rest_service/__main__.py
