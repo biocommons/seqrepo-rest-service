@@ -126,5 +126,3 @@ installed.  Invoke like this:
       --detach --rm -p 5000:5000 \
       -v /usr/local/share/seqrepo/:/usr/local/share/seqrepo/ \
       biocommons/seqrepo-rest-service
-
-.
