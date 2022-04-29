@@ -24,7 +24,7 @@ paths:
   /sequence/service-info:
     get:
       summary: Retrieve a summary of features this API deployment supports
-      operationId: seqrepo_rest_service.seqrepo_rest_service.refget.routes.serviceInfo.get
+      operationId: seqrepo_rest_service.refget.routes.serviceInfo.get
       tags:
         - Services
       responses:
@@ -40,7 +40,7 @@ paths:
     get:
       summary: Return a ping text indicating the service is up
       description: An endpoint that is meant to return a simple response and a 2XX success code
-      operationId: seqrepo_rest_service.seqrepo_rest_service.refget.routes.ping.get
+      operationId: seqrepo_rest_service.refget.routes.ping.get
       tags:
         - Services
       responses:
@@ -51,7 +51,7 @@ paths:
   /sequence/{id}:
     get:
       summary: Get a sequence from a hash
-      operationId: seqrepo_rest_service.seqrepo_rest_service.refget.routes.sequence.get
+      operationId: seqrepo_rest_service.refget.routes.sequence.get
       description: |
         Retrieve a reference sequence using a hash function
       tags:
@@ -119,7 +119,7 @@ paths:
     get:
       summary: Get reference metadata from a hash
       description: Retrieve a metadata about a reference sequence using a hash identifier
-      operationId: seqrepo_rest_service.seqrepo_rest_service.refget.routes.metadata.get
+      operationId: seqrepo_rest_service.refget.routes.metadata.get
       tags:
         - Metadata
       parameters:
