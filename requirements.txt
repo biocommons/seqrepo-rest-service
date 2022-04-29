@@ -1,4 +1,5 @@
+biocommons.seqrepo>=0.6.2
 coloredlogs==15.0.1
-connexion
+connexion[swagger-ui]
 Jinja2<3.0
 MarkupSafe==2.0.1
