@@ -71,7 +71,7 @@ paths:
       summary: Check status of service and return a summary of features
       tags:
         - Status
-      operationId: seqrepo_rest_service.seqrepo.routes.ping.get
+      operationId: ..seqrepo.routes.ping.get
       responses:
         200:
           description: >-
@@ -84,7 +84,7 @@ paths:
   /sequence/{alias}:
     get:
       summary: Retrieve a sequence by any alias
-      operationId: seqrepo_rest_service.seqrepo.routes.sequence.get
+      operationId: ..seqrepo.routes.sequence.get
       description: >-
         Retrieve a reference sequence using a hash function
       tags:
@@ -137,7 +137,7 @@ paths:
     get:
       summary: Get reference metadata from a hash
       description: Retrieve a metadata about a reference sequence using a hash identifier
-      operationId: seqrepo_rest_service.seqrepo.routes.metadata.get
+      operationId: ..seqrepo.routes.metadata.get
       tags:
         - Metadata
       parameters:
