@@ -2,8 +2,8 @@ import logging
 
 from connexion import NoContent
 
-from ...threadglobals import get_seqrepo
-from ...utils import get_sequence_ids, problem
+from seqrepo_rest_service.threadglobals import get_seqrepo
+from seqrepo_rest_service.utils import get_sequence_ids, problem
 
 
 _logger = logging.getLogger(__name__)

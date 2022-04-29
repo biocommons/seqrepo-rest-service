@@ -1,1 +1,1 @@
-web: python3 __main__.py
+web: python3 seqrepo_rest_service/__main__.py
