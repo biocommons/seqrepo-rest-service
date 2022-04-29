@@ -1,1 +1,1 @@
-web: python3 src/seqrepo_rest_service/__main__.py
+web: SEQREPO_DIR=/usr/local/share/seqrepo/latest seqrepo-rest-service
