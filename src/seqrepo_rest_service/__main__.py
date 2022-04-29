@@ -2,6 +2,7 @@
 
 """
 
+from pathlib import Path
 import logging
 import os
 
@@ -18,6 +19,7 @@ __version__ = "1.0.0"
 
 
 def main():
+    APP_ROOT = Path(__file__).resolve().parents[0]
     coloredlogs.install(level="INFO")
 
     if "SEQREPO_DIR" not in os.environ:
@@ -29,7 +31,7 @@ def main():
     spec_files = []
 
     # seqrepo interface
-    spec_fn = resource_filename(__name__, "seqrepo/openapi.yaml")
+    spec_fn = f"{APP_ROOT}/seqrepo/openapi.yaml"
     cxapp.add_api(spec_fn,
                   validate_responses=True,
                   strict_validation=True)
@@ -42,7 +44,7 @@ def main():
 
 
     # refget interface
-    spec_fn = resource_filename(__name__, "refget/refget-openapi.yaml")
+    spec_fn = f"{APP_ROOT}/refget/refget-openapi.yaml"
     cxapp.add_api(spec_fn,
                   validate_responses=True,
                   strict_validation=True)
