@@ -114,7 +114,7 @@ paths:
         416:
           description: Invalid range request specified
         501:
-          description: The specified request is not supported by the server          
+          description: The specified request is not supported by the server
   /sequence/{id}/metadata:
     get:
       summary: Get reference metadata from a hash

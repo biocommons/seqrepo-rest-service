@@ -17,7 +17,7 @@ try:
     seqrepo_dir = os.environ["SEQREPO_DIR"]
     _logger.info(f"Using seqrepo directory from SEQREPO_DIR ({seqrepo_dir})")
 except KeyError:
-    test_dir = os.path.join(os.path.dirname(__file__), '..', '..', 'tests', 'data', 'seqrepo', 'master')
+    test_dir = os.path.join(os.path.dirname(__file__), '', '..', 'tests', 'data', 'seqrepo', 'master')
     if os.path.exists(test_dir):
         seqrepo_dir = os.path.abspath(test_dir)
         _logger.warning(f"Using seqrepo test directory ({seqrepo_dir})")
