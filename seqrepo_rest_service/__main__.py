@@ -16,11 +16,10 @@ from flask import Flask, redirect
 _logger = logging.getLogger(__name__)
 # __version__ = get_distribution("seqrepo-rest-service").version
 __version__ = "1.0.0"
-
+APP_ROOT = Path("")
+print(APP_ROOT)
 
 def main():
-    APP_ROOT = Path(__file__).resolve().parents[0]
-    app = Flask(__name__)
     coloredlogs.install(level="INFO")
 
     if "SEQREPO_DIR" not in os.environ:
@@ -59,7 +58,6 @@ def main():
     _logger.info("Also watching " + str(spec_files))
     cxapp.run(host="0.0.0.0",
               extra_files=spec_files)
-    app.run()
 
 if __name__ == "__main__":
     main()
