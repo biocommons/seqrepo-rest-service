@@ -16,8 +16,8 @@ from flask import Flask, redirect
 _logger = logging.getLogger(__name__)
 # __version__ = get_distribution("seqrepo-rest-service").version
 __version__ = "1.0.0"
-APP_ROOT = Path("")
-print(APP_ROOT)
+APP_ROOT = Path(__file__).resolve().parents[0]
+
 
 def main():
     coloredlogs.install(level="INFO")
@@ -49,12 +49,12 @@ def main():
                   validate_responses=True,
                   strict_validation=True)
     spec_files += [spec_fn]
-     
+
     @cxapp.route('/refget')
     def refget_ui():
         return redirect("/refget/1/ui/")
 
-    
+
     _logger.info("Also watching " + str(spec_files))
     cxapp.run(host="0.0.0.0",
               extra_files=spec_files)
