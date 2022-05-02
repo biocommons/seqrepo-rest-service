@@ -31,7 +31,7 @@ def main():
     spec_files = []
 
     # seqrepo interface
-    spec_fn = f"{APP_ROOT}/seqrepo/openapi.yaml"
+    spec_fn = f"{APP_ROOT}/seqrepo_rest_service/seqrepo/openapi.yaml"
     cxapp.add_api(spec_fn,
                   validate_responses=True,
                   strict_validation=True)
@@ -44,7 +44,7 @@ def main():
 
 
     # refget interface
-    spec_fn = f"{APP_ROOT}/refget/refget-openapi.yaml"
+    spec_fn = f"{APP_ROOT}/seqrepo_rest_service/refget/refget-openapi.yaml"
     cxapp.add_api(spec_fn,
                   validate_responses=True,
                   strict_validation=True)
