@@ -1,3 +1,4 @@
+from seqrepo_rest_service import __version__
 from seqrepo_rest_service.threadglobals import get_seqrepo
 
 import biocommons.seqrepo 
@@ -10,7 +11,7 @@ def get():
     sr = get_seqrepo()
     
     return {
-        "version": get_distribution("seqrepo-rest-service").version,
+        "version": __version__,
         "url": "https://github.com/biocommons/seqrepo-rest-service/",
         "dependencies": {
             "seqrepo": {
