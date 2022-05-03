@@ -56,7 +56,7 @@ def main():
 
 
     _logger.info("Also watching " + str(spec_files))
-    cxapp.run(host="0.0.0.0", port="80",
+    cxapp.run(host="0.0.0.0",
               extra_files=spec_files)
 
 if __name__ == "__main__":
