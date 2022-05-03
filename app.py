@@ -16,8 +16,6 @@ from flask import Flask, redirect
 _logger = logging.getLogger(__name__)
 # __version__ = get_distribution("seqrepo-rest-service").version
 __version__ = "1.0.0"
-APP_ROOT = Path(__file__).resolve().parents[0]
-
 
 def main():
     coloredlogs.install(level="INFO")
