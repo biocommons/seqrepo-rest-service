@@ -4,7 +4,7 @@ import json
 import time
 client = boto3.client('lambda')
 servicecatalog = boto3.client('servicecatalog')
-eb_env_name = "Seqrepo-staging-env"
+eb_env_name = "seqrepo-staging-env"
 data = {"sc_provisioned_name": eb_env_name}
 client.invoke(FunctionName='igm-inf-terminate-provisioned-product',
               Payload=json.dumps(data))
