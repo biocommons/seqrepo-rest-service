@@ -103,7 +103,7 @@ With range:
 ## Development
 
     $ make devready
-    $ source venv/3.7/bin/activate
+    $ source venv/bin/activate
 
 
 ## Running a local instance
