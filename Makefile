@@ -14,6 +14,7 @@ PKGD=$(subst .,/,${PKG})
 TEST_DIRS:=tests
 DOC_TESTS:=doc hgvs ./README.rst
 
+export DOCKER_BUILDKIT=1
 
 ############################################################################
 #= BASIC USAGE
@@ -56,6 +57,10 @@ bdist bdist_egg bdist_wheel build sdist install: %:
 #=> docker-image: build docker image
 docker-image:
 	docker build -t biocommons/seqrepo-rest-service .
+	TAG=$$(git describe --tags | head -1); if [ -n "$$TAG" ]; then \
+		docker tag biocommons/seqrepo-rest-service:latest biocommons/seqrepo-rest-service:$$TAG; \
+		echo "Created biocommons/seqrepo-rest-service:$$TAG"; \
+	fi
 
 
 ############################################################################
