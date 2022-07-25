@@ -1,4 +1,6 @@
-FROM ubuntu:20.04
+# docker build -t biocommons/seqrepo-rest-service .
+
+FROM ubuntu:22.04
 
 RUN apt update && apt upgrade -y && apt install -y \
     curl \

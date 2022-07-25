@@ -1,5 +1,8 @@
 # seqrepo-rest-api
 
+**Breaking Change (July 2022): SEQREPO_DIR is now ignored.  You must pass the seqrepo
+instance directory explicitly.  See examples below.**
+
 Provides an OpenAPI-based REST interface to biological sequences and
 sequence metadata.
 
@@ -110,19 +113,42 @@ With range:
 
 Once installed as above, you should be able to:
 
-    $ SEQREPO_DIR=/usr/local/share/seqrepo/latest seqrepo-rest-service
+    $ seqrepo-rest-service /usr/local/share/seqrepo/latest
 
 The navigate to the URL shown in the console output.
 
 
-## Running a docker image
+## Building and running a docker image
 
-A docker image is available.  It expects to have a local
-[seqrepo](https://github.com/biocommons/biocommons.seqrepo/) instance
-installed.  Invoke like this:
+A docker image can be built with this repo or pulled from [docker
+hub](https://hub.docker.com/r/biocommons/seqrepo-rest-service).  It expects to
+have a local [seqrepo](https://github.com/biocommons/biocommons.seqrepo/) data
+instance available.  
 
-    $ docker run \
+To build a docker image in this repo:
+
+    make docker-image
+
+This will create biocommons/seqrepo-rest-service:lastest, like this:
+
+    $ docker images 
+    REPOSITORY                        TAG     IMAGE ID       CREATED          SIZE
+    biocommons/seqrepo-rest-service   latest  ad9ca051c5c9   2 minutes ago    627MB
+
+This docker image is periodically pushed to docker hub.
+
+Invoke the docker image like this this:
+
+    docker run \
       --name seqrepo-rest-service \
       --detach --rm -p 5000:5000 \
-      -v /usr/local/share/seqrepo/:/usr/local/share/seqrepo/ \
-      biocommons/seqrepo-rest-service
+      -v /usr/local/share/seqrepo/2021-01-29:/mnt/seqrepo \
+      biocommons/seqrepo-rest-service \
+      seqrepo-rest-service /mnt/seqrepo
+
+You should then be able to fetch a test sequence like this:
+
+    $ curl 'http://127.0.0.1:5000/seqrepo/1/sequence/refseq:NM_000551.3?end=20'
+    CCTCGCCTCCGTTACAACGG
+
+If things aren't working, check the logs with `docker logs -f seqrepo-rest-service`.

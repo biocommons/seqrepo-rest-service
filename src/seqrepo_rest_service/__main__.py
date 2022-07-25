@@ -2,11 +2,14 @@
 
 """
 
+from genericpath import isdir
 import logging
 import os
+import sys
 
 from pkg_resources import get_distribution, resource_filename
 
+from biocommons.seqrepo import SeqRepo
 import coloredlogs
 import connexion
 from flask import Flask, redirect
@@ -19,11 +22,20 @@ __version__ = get_distribution("seqrepo-rest-service").version
 def main():
     coloredlogs.install(level="INFO")
 
-    if "SEQREPO_DIR" not in os.environ:
-        _logger.warn("SEQREPO_DIR is undefined; rest service will use `latest`")
+    if "SEQREPO_DIR" in os.environ:
+        _logger.warn("SEQREPO_DIR environment variable is now ignored")
+        
+    # TODO: use argparse
+    if len(sys.argv) != 2:
+        raise RuntimeError("Usage: seqrepo-rest-service <dir>")
+
+    seqrepo_dir = sys.argv[1]
+    _logger.info(f"Using {seqrepo_dir=} from command line")
+    _ = SeqRepo(seqrepo_dir)   # test opening
 
     cxapp = connexion.App(__name__, debug=True)
     cxapp.app.url_map.strict_slashes = False
+    cxapp.app.config["seqrepo_dir"] = seqrepo_dir
 
     spec_files = []
 

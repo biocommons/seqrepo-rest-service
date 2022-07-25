@@ -53,6 +53,10 @@ develop:
 bdist bdist_egg bdist_wheel build sdist install: %:
 	python setup.py $@
 
+#=> docker-image: build docker image
+docker-image:
+	docker build -t biocommons/seqrepo-rest-service .
+
 
 ############################################################################
 #= TESTING
@@ -66,8 +70,7 @@ bdist bdist_egg bdist_wheel build sdist install: %:
 # find tests -name \*.py | xargs perl -ln0e 'while (m/@pytest.mark.(\w+)/g) {print $1 if not $seen{$1}++}'  | sort
 # => extra fx issues mapping models normalization parametrize pnd quick regression validation
 .PHONY: test test-code test-docs
-test:
-	python setup.py pytest
+test: test-code test-docs
 test-code:
 	python setup.py pytest --addopts="${TEST_DIRS}"
 test-docs:
