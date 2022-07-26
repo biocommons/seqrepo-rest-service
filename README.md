@@ -1,40 +1,39 @@
 # seqrepo-rest-api
 
-**Breaking Change (July 2022): SEQREPO_DIR is now ignored.  You must pass the seqrepo
-instance directory explicitly.  See examples below.**
+Provides SeqRepo and GA4GH RefGet REST interfaces to biological sequences and sequence metadata from an existing
+[seqrepo](https://github.com/biocommons/biocommons.seqrepo/) sequence repository.
 
-Provides an OpenAPI-based REST interface to biological sequences and
-sequence metadata.
+## Important changes
 
-Clients refer to sequences and metadata using familiar identifiers,
-such as NM_000551.3 or GRCh38:1, or any of several hash-based
-identifiers.  The interface supports fast slicing of arbitrary regions
-of large sequences.
+**Breaking Change (July 2022): SEQREPO_DIR is now ignored.  You must pass the seqrepo instance directory explicitly.
+See examples below.**
 
-A "fully-qualified" identifier includes a namespace to disambiguate
-accessions (e.g., "1" in GRCh37 and GRCh38). If the namespace is
-provided, seqrepo uses it as-is.  If the namespace is not provided and
-the unqualified identifier refers to a unique sequence, it is
-returned; otherwise, ambiguous identifiers will raise an error.
+## Description
 
-SeqRepo favors identifiers from [identifiers.org](identifiers.org)
-whenever available.  Examples include
+Specific, named biological sequences provide the reference and coordinate sysstem for communicating variation and
+consequential phenotypic changes. Several databases of sequences exist, with significant overlap, all using distinct
+names. Furthermore, these systems are often difficult to install locally. 
+
+Clients refer to sequences and metadata using familiar identifiers, such as NM_000551.3 or GRCh38:1, or any of several
+hash-based identifiers.  The interface supports fast slicing of arbitrary regions of large sequences.
+
+A "fully-qualified" identifier includes a namespace to disambiguate accessions (e.g., "1" in GRCh37 and GRCh38). If the
+namespace is provided, seqrepo uses it as-is.  If the namespace is not provided and the unqualified identifier refers to
+a unique sequence, it is returned; otherwise, ambiguous identifiers will raise an error.
+
+SeqRepo favors identifiers from [identifiers.org](identifiers.org) whenever available.  Examples include
 [refseq](https://registry.identifiers.org/registry/refseq) and
 [ensembl](https://registry.identifiers.org/registry/ensembl).
 
-This repository is the REST interface only.  The underlying data is
-provided by
+This repository is the REST interface only.  The underlying data is provided by
 [seqrepo](https://github.com/biocommons/biocommons.seqrepo/).
 
-This repository also implements the [GA4GH refget (v1)
-protocol](https://samtools.github.io/hts-specs/refget.html) at
+This repository also implements the [GA4GH refget (v1) protocol](https://samtools.github.io/hts-specs/refget.html) at
 `<baseurl>/refget/`.
 
 Released under the Apache License, 2.0.
 
-Links:
-[Issues](https://github.com/biocommons/seqrepo-rest-service/issues) |
-[Docker
+Links: [Issues](https://github.com/biocommons/seqrepo-rest-service/issues) | [Docker
 image](https://cloud.docker.com/u/biocommons/repository/docker/biocommons/seqrepo-rest-service)
 
 
@@ -108,12 +107,11 @@ With range:
     $ make devready
     $ source venv/bin/activate
 
-
 ## Running a local instance
 
 Once installed as above, you should be able to:
 
-    $ seqrepo-rest-service /usr/local/share/seqrepo/latest
+    $ seqrepo-rest-service /usr/local/share/seqrepo/2021-01-29
 
 The navigate to the URL shown in the console output.
 
@@ -121,9 +119,8 @@ The navigate to the URL shown in the console output.
 ## Building and running a docker image
 
 A docker image can be built with this repo or pulled from [docker
-hub](https://hub.docker.com/r/biocommons/seqrepo-rest-service).  It expects to
-have a local [seqrepo](https://github.com/biocommons/biocommons.seqrepo/) data
-instance available.  
+hub](https://hub.docker.com/r/biocommons/seqrepo-rest-service).  In either case, the container requires an existing
+local [seqrepo](https://github.com/biocommons/biocommons.seqrepo/) sequence repository.  
 
 To build a docker image in this repo:
 
