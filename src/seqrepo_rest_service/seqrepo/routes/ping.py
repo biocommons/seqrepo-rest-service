@@ -15,7 +15,7 @@ def get():
         "dependencies": {
             "seqrepo": {
                 "version": biocommons.seqrepo.__version__,
-                "root": sr._root_dir,
+                "root": str(sr._root_dir),
                 "url": "https://github.com/biocommons/biocommons.seqrepo/",
             },
             "bioutils": {
