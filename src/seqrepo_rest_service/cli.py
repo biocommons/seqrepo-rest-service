@@ -3,24 +3,26 @@
 """
 
 import argparse
+import importlib.resources
 import logging
 import os
 import pathlib
 import time
-
-from pkg_resources import get_distribution, resource_filename
 
 from biocommons.seqrepo import SeqRepo
 import coloredlogs
 import connexion
 from flask import Flask, redirect
 
+from . import __version__
+
+
 
 WAIT_POLL_PERIOD = 15  # seconds between polling for SEQREPO PATH
 
 
 _logger = logging.getLogger(__name__)
-__version__ = get_distribution("seqrepo-rest-service").version
+resources = importlib.resources.files(__package__)
 
 
 def _parse_opts():
@@ -64,8 +66,8 @@ def main():
     spec_files = []
 
     # seqrepo interface
-    spec_fn = resource_filename(__name__, "seqrepo/openapi.yaml")
-    cxapp.add_api(spec_fn, validate_responses=True, strict_validation=True)
+    spec_fn = resources / "seqrepo" / "openapi.yaml"
+    cxapp.add_api(str(spec_fn), validate_responses=True, strict_validation=True)
     spec_files += [spec_fn]
 
     @cxapp.route("/")
@@ -74,8 +76,8 @@ def main():
         return redirect("/seqrepo/1/ui/")
 
     # refget interface
-    spec_fn = resource_filename(__name__, "refget/refget-openapi.yaml")
-    cxapp.add_api(spec_fn, validate_responses=True, strict_validation=True)
+    spec_fn = resources / "refget" / "refget-openapi.yaml"
+    cxapp.add_api(str(spec_fn), validate_responses=True, strict_validation=True)
     spec_files += [spec_fn]
 
     @cxapp.route("/refget")
