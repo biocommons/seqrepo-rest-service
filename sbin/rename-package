@@ -1,0 +1,50 @@
+#!/bin/bash
+# renames this Python package
+
+
+new_name="$1"
+if [ -z "$new_name" ]; then
+    # This expression is intended to work for urls like https://github.com/biocommons/biocommons.example.git
+    # (preferred for Python packages) and https://github.com/biocommons/example.git
+    new_name=$(expr "$(git remote get-url origin)" : '.*biocommons.\(.*\).git')
+fi
+echo "Renaming to $new_name"
+
+if ! git diff --cached --exit-code >/dev/null; then
+    echo "Repository not clean" 1>&2;
+    exit 1;
+fi
+
+# Substitute new name for example in relevant files
+xargs perl -i.bak -p0e "s/(biocommons.)example/\1$new_name/g" <<EOF
+Makefile
+pyproject.toml
+README.md
+setup.cfg
+src/biocommons/example/__init__.py
+src/biocommons/example/__main__.py
+src/biocommons/example/marvin_adjacent_test.py
+src/biocommons/example/tests/marvin_subdir_test.py
+tests/test_example.py
+tests/test_marvin.py
+EOF
+
+
+# Rename files with "example" in them
+(
+    sort -r | while read path; do
+        git mv "$path" "${path/example/$new_name}"
+    done
+) <<EOF
+./src/biocommons/example
+./tests/test_example.py
+EOF
+
+cat <<EOF
+#####################################################################
+## Renamed to biocommons-$new_name.
+## You confirm the git diff below, then commit and push.
+#####################################################################
+EOF
+
+git status --short
