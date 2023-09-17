@@ -1,14 +1,13 @@
-from ...threadglobals import get_seqrepo
-
-import biocommons.seqrepo 
+import biocommons.seqrepo
 import bioutils
-
 from pkg_resources import get_distribution
+
+from ...threadglobals import get_seqrepo
 
 
 def get():
     sr = get_seqrepo()
-    
+
     return {
         "version": get_distribution("seqrepo-rest-service").version,
         "url": "https://github.com/biocommons/seqrepo-rest-service/",
@@ -22,5 +21,5 @@ def get():
                 "version": bioutils.__version__,
                 "url": "https://github.com/biocommons/bioutils/",
             },
-        }
+        },
     }

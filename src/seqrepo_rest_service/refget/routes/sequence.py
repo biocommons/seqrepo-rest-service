@@ -6,7 +6,6 @@ from connexion import NoContent, request
 from ...threadglobals import get_seqrepo
 from ...utils import get_sequence_id, problem, valid_content_types
 
-
 _logger = logging.getLogger(__name__)
 
 range_re = re.compile("^bytes=(\d+)-(\d+)$")
@@ -16,7 +15,7 @@ def get(id, start=None, end=None):
     accept_header = request.headers.get("Accept", None)
     if accept_header and accept_header not in valid_content_types:
         return problem(406, "Invalid Accept header")
-    
+
     range_header = request.headers.get("Range", None)
     if range_header:
         _logger.debug(f"Received header `Range: {range_header}`")
@@ -29,13 +28,13 @@ def get(id, start=None, end=None):
         _logger.debug(f"Parsed `{range_header}` as ({start}, {end})")
         if start > end:
             return problem(416, f"Range queries may specify start > end")
-        
+
     sr = get_seqrepo()
     seq_id = get_sequence_id(sr, id)
     if not seq_id:
         return NoContent, 404
     seqinfo = sr.sequences.fetch_seqinfo(seq_id)
-   
+
     if start is not None and end is not None:
         if start >= seqinfo["len"]:
             return problem(416, "Invalid coordinates: start > sequence length")
@@ -45,11 +44,12 @@ def get(id, start=None, end=None):
         if start > end:
             return problem(501, "Invalid coordinates: start > end")
         if not (0 <= start <= end <= seqinfo["len"]) and not range_header:
-            return problem(416, "Invalid coordinates: must obey 0 <= start <= end <= sequence_length")
+            return problem(
+                416, "Invalid coordinates: must obey 0 <= start <= end <= sequence_length"
+            )
 
     try:
         status = 206 if ((start or end) and range_header) else 200
         return sr.sequences.fetch(seq_id, start, end), status
     except KeyError:
         return NoContent, 404
-    

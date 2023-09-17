@@ -6,7 +6,6 @@ from connexion import NoContent, request
 from ...threadglobals import get_seqrepo
 from ...utils import get_sequence_ids, problem
 
-
 _logger = logging.getLogger(__name__)
 
 

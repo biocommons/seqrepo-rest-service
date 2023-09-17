@@ -14,13 +14,11 @@ _logger = logging.getLogger(__name__)
 def get_seqrepo():
     seqrepo_dir = current_app.config["seqrepo_dir"]
     _logger.info(f"Opening {seqrepo_dir=}")
-    return _get_or_create(
-        "seqrepo",
-        lambda: SeqRepo(root_dir=seqrepo_dir))
+    return _get_or_create("seqrepo", lambda: SeqRepo(root_dir=seqrepo_dir))
 
 
 def _get_or_create(k, f):
-    k = '_' + k
+    k = "_" + k
     o = getattr(g, k, None)
     if o is None:
         o = f()

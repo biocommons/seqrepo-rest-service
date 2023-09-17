@@ -9,14 +9,12 @@ import os
 import pathlib
 import time
 
-from biocommons.seqrepo import SeqRepo
 import coloredlogs
 import connexion
+from biocommons.seqrepo import SeqRepo
 from flask import Flask, redirect
 
 from . import __version__
-
-
 
 WAIT_POLL_PERIOD = 15  # seconds between polling for SEQREPO PATH
 

@@ -5,7 +5,6 @@ from connexion import NoContent
 from ...threadglobals import get_seqrepo
 from ...utils import get_sequence_ids, problem
 
-
 _logger = logging.getLogger(__name__)
 
 
@@ -27,6 +26,6 @@ def get(alias):
         "aliases": [f"{a['namespace']}:{a['alias']}" for a in aliases],
         "alphabet": seqinfo["alpha"],
         "length": seqinfo["len"],
-        }
+    }
 
     return md, 200
