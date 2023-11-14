@@ -57,7 +57,6 @@ install:
 build: %:
 	python -m build
 
-
 ############################################################################
 #= TESTING
 # see test configuration in setup.cfg
@@ -112,6 +111,14 @@ rename:
 docs: develop
 	# RTD makes json. Build here to ensure that it works.
 	make -C doc html json
+
+#=> docker-image: build docker image
+docker-image:
+	docker build -t biocommons/seqrepo-rest-service .
+	TAG=$$(git describe --tags | head -1); if [ -n "$$TAG" ]; then \
+		docker tag biocommons/seqrepo-rest-service:latest biocommons/seqrepo-rest-service:$$TAG; \
+		echo "Created biocommons/seqrepo-rest-service:$$TAG"; \
+	fi
 
 ############################################################################
 #= CLEANUP

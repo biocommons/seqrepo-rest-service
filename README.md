@@ -3,23 +3,23 @@
 Provides SeqRepo and GA4GH RefGet REST interfaces to biological sequences and sequence metadata from an existing
 [seqrepo](https://github.com/biocommons/biocommons.seqrepo/) sequence repository.
 
-## Important changes
-
-**Breaking Change (July 2022): SEQREPO_DIR is now ignored.  You must pass the seqrepo instance directory explicitly.
-See examples below.**
-
 ## Description
 
-Specific, named biological sequences provide the reference and coordinate sysstem for communicating variation and
-consequential phenotypic changes. Several databases of sequences exist, with significant overlap, all using distinct
-names. Furthermore, these systems are often difficult to install locally. 
+Specific, named biological sequences provide the reference and coordinate
+sysstem for communicating variation and consequential phenotypic changes.
+Several databases of sequences exist, with significant overlap, all using
+distinct names. Furthermore, these systems are often difficult to install
+locally. 
 
-Clients refer to sequences and metadata using familiar identifiers, such as NM_000551.3 or GRCh38:1, or any of several
-hash-based identifiers.  The interface supports fast slicing of arbitrary regions of large sequences.
+Clients refer to sequences and metadata using familiar identifiers, such as
+NM_000551.3 or GRCh38:1, or any of several hash-based identifiers.  The
+interface supports fast slicing of arbitrary regions of large sequences.
 
-A "fully-qualified" identifier includes a namespace to disambiguate accessions (e.g., "1" in GRCh37 and GRCh38). If the
-namespace is provided, seqrepo uses it as-is.  If the namespace is not provided and the unqualified identifier refers to
-a unique sequence, it is returned; otherwise, ambiguous identifiers will raise an error.
+A "fully-qualified" identifier includes a namespace to disambiguate accessions
+(e.g., "1" in GRCh37 and GRCh38). If the namespace is provided, seqrepo uses it
+as-is.  If the namespace is not provided and the unqualified identifier refers
+to a unique sequence, it is returned; otherwise, ambiguous identifiers will
+raise an error.
 
 SeqRepo favors identifiers from [identifiers.org](identifiers.org) whenever available.  Examples include
 [refseq](https://registry.identifiers.org/registry/refseq) and
@@ -28,12 +28,14 @@ SeqRepo favors identifiers from [identifiers.org](identifiers.org) whenever avai
 This repository is the REST interface only.  The underlying data is provided by
 [seqrepo](https://github.com/biocommons/biocommons.seqrepo/).
 
-This repository also implements the [GA4GH refget (v1) protocol](https://samtools.github.io/hts-specs/refget.html) at
+This repository also implements the [GA4GH refget (v1)
+protocol](https://samtools.github.io/hts-specs/refget.html) at
 `<baseurl>/refget/`.
 
 Released under the Apache License, 2.0.
 
-Links: [Issues](https://github.com/biocommons/seqrepo-rest-service/issues) | [Docker
+Links: [Issues](https://github.com/biocommons/seqrepo-rest-service/issues) |
+[Docker
 image](https://cloud.docker.com/u/biocommons/repository/docker/biocommons/seqrepo-rest-service)
 
 
