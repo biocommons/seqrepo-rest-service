@@ -128,7 +128,7 @@ To build a docker image in this repo:
 
     make docker-image
 
-This will create biocommons/seqrepo-rest-service:lastest, like this:
+This will create biocommons/seqrepo-rest-service:latest, like this:
 
     $ docker images 
     REPOSITORY                        TAG     IMAGE ID       CREATED          SIZE
