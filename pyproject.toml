@@ -25,21 +25,21 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
-	"bandit ~= 1.7",
-	"black ~= 22.3",
-	"build ~= 0.8",
-	"flake8 ~= 4.0",
-	"ipython ~= 8.4",
-	"isort ~= 5.10",
-	"mypy-extensions ~= 1.0",
-	"pre-commit ~= 3.4",
-	"pylint ~= 2.14",
-	"pytest-cov ~= 4.1",
-	"pytest-optional-tests",
-	"pytest ~= 7.1",
-	"pyright~=1.1",
-	"tox ~= 3.25",
-	"vcrpy",
+    "bandit ~= 1.7",
+    "black ~= 22.3",
+    "build ~= 0.8",
+    "flake8 ~= 4.0",
+    "ipython ~= 8.4",
+    "isort ~= 5.10",
+    "mypy-extensions ~= 1.0",
+    "pre-commit ~= 3.4",
+    "pylint ~= 2.14",
+    "pytest-cov ~= 4.1",
+    "pytest-optional-tests",
+    "pytest ~= 7.1",
+    "pyright~=1.1",
+    "tox ~= 3.25",
+    "vcrpy",
 ]
 docs = ["mkdocs"]
 
