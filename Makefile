@@ -5,7 +5,7 @@
 .PRECIOUS:
 .SUFFIXES:
 
-SHELL:=/bin/bash -e -o pipefail -O globstar
+SHELL:=bash -e -o pipefail -O globstar
 SELF:=$(firstword $(MAKEFILE_LIST))
 
 VE_DIR=venv
@@ -150,13 +150,13 @@ distclean: cleanest
 
 ## <LICENSE>
 ## Copyright 2023 Source Code Committers
-## 
+##
 ## Licensed under the Apache License, Version 2.0 (the "License");
 ## you may not use this file except in compliance with the License.
 ## You may obtain a copy of the License at
-## 
+##
 ##     http://www.apache.org/licenses/LICENSE-2.0
-## 
+##
 ## Unless required by applicable law or agreed to in writing, software
 ## distributed under the License is distributed on an "AS IS" BASIS,
 ## WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
