@@ -145,6 +145,16 @@ Invoke the docker image like this this:
       biocommons/seqrepo-rest-service \
       seqrepo-rest-service /mnt/seqrepo
 
+Where the command line options are as follows:
+* `--name seqrepo-rest-service:` Assigns the name `seqrepo-rest-service` to the container
+* `--detach:` Runs the container in background and prints the container ID
+* `--rm:` Automatically removes the container when it exits
+* `-p 5000:5000:` Publishes a container’s port(s), `5000:5000`, to the local host
+* `-v /usr/local/share/seqrepo/2021-01-29:/mnt/seqrepo`: Binds the local volume, `/usr/local/share/seqrepo/2021-01-29` to the address `/mnt/seqrepo` within the container
+* `biocommons/seqrepo-rest-service:` Specifies the docker image (as built above)
+* `seqrepo-rest-service:` Specifies the console name or entry point `seqrepo_rest_service.cli:main`
+* `/mnt/seqrepo:` Specifies the SeqRepo instance directory, as corresponding to the volume above
+
 You should then be able to fetch a test sequence like this:
 
     $ curl 'http://127.0.0.1:5000/seqrepo/1/sequence/refseq:NM_000551.3?end=20'
