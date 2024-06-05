@@ -1,6 +1,4 @@
-"""start seqrepo rest service
-
-"""
+"""start seqrepo rest service"""
 
 import argparse
 import importlib.resources
