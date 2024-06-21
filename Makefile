@@ -65,7 +65,7 @@ build: %:
 cqa:
 	flake8 src --count --select=E9,F63,F7,F82 --show-source --statistics
 	isort --profile black --check src
-	black --check src
+	ruff format --check src
 	bandit -ll -r src
 
 #=> test: execute tests
@@ -93,13 +93,13 @@ tox:
 ############################################################################
 #= UTILITY TARGETS
 
-#=> reformat: reformat code with yapf and commit
+#=> reformat: reformat code with ruff/isort and commit
 .PHONY: reformat
 reformat:
 	@if ! git diff --cached --exit-code >/dev/null; then echo "Repository not clean" 1>&2; exit 1; fi
-	black src tests
+	ruff format src tests
 	isort src tests
-	git commit -a -m "reformatted with black and isort"
+	git commit -a -m "reformatted with ruff and isort"
 
 #=> rename: rename files and substitute content for new repo name
 .PHONY: rename
