@@ -1,6 +1,4 @@
-"""per-thread globals for seqrepo REST APIs
-
-"""
+"""per-thread globals for seqrepo REST APIs"""
 
 import logging
 
