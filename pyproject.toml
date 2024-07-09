@@ -21,6 +21,7 @@ dependencies = [
     "coloredlogs",
     "connexion[swagger-ui] ~= 2.2",
     "Flask ~= 2.2",
+    "setuptools",  # pin until yoyo-migrations is updated
 ]
 
 [project.optional-dependencies]
