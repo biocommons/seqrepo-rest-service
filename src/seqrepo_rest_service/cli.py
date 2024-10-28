@@ -7,10 +7,11 @@ import os
 import pathlib
 import time
 
+from biocommons.seqrepo import SeqRepo
 import coloredlogs
 import connexion
-from biocommons.seqrepo import SeqRepo
-from flask import Flask, redirect
+from flask import redirect
+from waitress import serve
 
 from . import __version__
 
@@ -19,7 +20,6 @@ WAIT_POLL_PERIOD = 15  # seconds between polling for SEQREPO PATH
 
 _logger = logging.getLogger(__name__)
 resources = importlib.resources.files(__package__)
-
 
 def _parse_opts():
     ap = argparse.ArgumentParser(description=__doc__.split()[0])
@@ -55,7 +55,7 @@ def main():
         _logger.info(f"{seqrepo_dir}: path found")
     _ = SeqRepo(seqrepo_dir.as_posix())  # test opening
 
-    cxapp = connexion.App(__name__, debug=True)
+    cxapp = connexion.App(__name__, debug=False)
     cxapp.app.url_map.strict_slashes = False
     cxapp.app.config["seqrepo_dir"] = seqrepo_dir
 
@@ -80,9 +80,11 @@ def main():
     def refget_ui():
         return redirect("/refget/1/ui/")
 
-    _logger.info("Also watching " + str(spec_files))
-    cxapp.run(host="0.0.0.0", extra_files=spec_files)
-
+    # Do not use Flask's builting development server. 
+    # cxapp.run(host="0.0.0.0", extra_files=spec_files)
+    
+    # Use the Waitress production server 
+    serve(cxapp, host='0.0.0.0', port=5000, threads = 10)
 
 if __name__ == "__main__":
     main()
