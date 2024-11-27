@@ -37,9 +37,9 @@ devready:
 
 #=> venv: make a Python 3 virtual environment
 ${VE_DIR}:
-	python3 -mvenv $@; \
+	python -mvenv $@; \
 	source $@/bin/activate; \
-	python3 -m ensurepip --upgrade; \
+	python -m ensurepip --upgrade; \
 	pip install --upgrade pip setuptools wheel
 
 #=> develop: install package in develop mode
