@@ -41,7 +41,7 @@ def log_request(alias, start, end):
 
     if number_of_seconds_since_last_query >= log_request_interval:
         _logger.info(f"seqrepo rest request: alias={alias}, start={start}, end={end}, http_client_ip={http_client_ip}")
-            
-    # This does not need to be threadsafe 
-    current_app.config["log_request_last_log_time"] = time.time()
+        
+        # This does not need to be threadsafe 
+        current_app.config["log_request_last_log_time"] = time.time()
     
