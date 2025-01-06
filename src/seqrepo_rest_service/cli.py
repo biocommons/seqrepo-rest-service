@@ -58,6 +58,7 @@ def main():
     cxapp = connexion.App(__name__, debug=False)
     cxapp.app.url_map.strict_slashes = False
     cxapp.app.config["seqrepo_dir"] = seqrepo_dir
+    cxapp.app.config["log_request_last_log_time"] = 0
 
     spec_files = []
 
