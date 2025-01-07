@@ -1,11 +1,13 @@
 """per-thread globals for seqrepo REST APIs"""
 
+import datetime
 import logging
 import time
 
 from biocommons.seqrepo import SeqRepo
 from connexion import request
 from flask import current_app
+
 
 _logger = logging.getLogger(__name__)
 
@@ -25,7 +27,12 @@ def _get_or_create(k, f, create=True):
         setattr(_get_or_create, k, o)
     return o
 
-def log_request(alias, start, end):
+def _convert_time(real_seconds, user_seconds):
+    dt_real = datetime.timedelta(seconds = real_seconds)
+    dt_user = datetime.timedelta(seconds = user_seconds)    
+    return str(dt_real), str(dt_user)
+
+def log_request(alias, start, end, time_real, time_user):
     """
     We are seeing cpu spikes from the REST service even when we don't think there are any requests coming in. 
     This method will log requests so we can see if indeed there are requests associated with the increased cpu.  
@@ -34,13 +41,15 @@ def log_request(alias, start, end):
     # Minimum number of seconds between log messages
     log_request_interval = 30
     
-    http_client_ip = request.remote_addr
-    
     log_request_last_log_time = current_app.config["log_request_last_log_time"]
     number_of_seconds_since_last_query = time.time() - log_request_last_log_time
 
     if number_of_seconds_since_last_query >= log_request_interval:
-        _logger.info(f"seqrepo rest request: alias={alias}, start={start}, end={end}, http_client_ip={http_client_ip}")
+        http_client_ip = request.remote_addr
+        
+        real_time, user_time = _convert_time(time_real, time_user)
+        
+        _logger.info(f"seqrepo rest request: {alias}, {start}, {end}, {http_client_ip}, {real_time}, {user_time}")
         
         # This does not need to be threadsafe 
         current_app.config["log_request_last_log_time"] = time.time()
