@@ -31,6 +31,6 @@ def get(alias, start=None, end=None):
     stop_time_real = time.perf_counter()
     stop_time_user = time.process_time()
 
-    log_request(alias, start, end, stop_time_real - start_time_real, stop_time_user - start_time_user)
+    log_request(alias, start, end, stop_time_real - start_time_real, stop_time_user - start_time_user, sr)
         
     return f

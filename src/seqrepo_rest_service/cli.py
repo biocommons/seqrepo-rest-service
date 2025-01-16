@@ -3,6 +3,7 @@
 import argparse
 import importlib.resources
 import logging
+from logging.handlers import RotatingFileHandler
 import os
 import pathlib
 import time
@@ -38,10 +39,14 @@ def _parse_opts():
     opts = ap.parse_args()
     return opts
 
-
-def main():
-    coloredlogs.install(level="INFO")
-
+def main():    
+    handler = RotatingFileHandler('seqrepo_rest_service.log', maxBytes=1000000, backupCount=1)    
+    formatter = logging.Formatter("%(asctime)s : %(levelname)s : [%(filename)s:%(lineno)s - %(funcName)s()] : %(message)s", "%Y-%m-%d %H:%M")
+    handler.setFormatter(formatter)    
+    root_logger = logging.getLogger()
+    root_logger.setLevel(logging.INFO)
+    root_logger.addHandler(handler)   
+    
     if "SEQREPO_DIR" in os.environ:
         _logger.warn("SEQREPO_DIR environment variable is now ignored")
 
