@@ -23,7 +23,7 @@ info:
     not provided and the unqualified identifier refers to a unique
     sequence, it is returned; otherwise, ambiguous identifiers will
     raise an error.
-    
+
 
     Docker instances of SeqRepo and this REST API are available for
     local installation.

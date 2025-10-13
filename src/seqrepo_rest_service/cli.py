@@ -10,9 +10,7 @@ import time
 import coloredlogs
 import connexion
 from biocommons.seqrepo import SeqRepo
-from flask import Flask, redirect
-
-from . import __version__
+from flask import redirect
 
 WAIT_POLL_PERIOD = 15  # seconds between polling for SEQREPO PATH
 
@@ -35,24 +33,23 @@ def _parse_opts():
         default=False,
         help="Wait for path to exist before starting (useful for docker-compose)",
     )
-    opts = ap.parse_args()
-    return opts
+    return ap.parse_args()
 
 
 def main():
     coloredlogs.install(level="INFO")
 
     if "SEQREPO_DIR" in os.environ:
-        _logger.warn("SEQREPO_DIR environment variable is now ignored")
+        _logger.warning("SEQREPO_DIR environment variable is now ignored")
 
     opts = _parse_opts()
 
     seqrepo_dir = opts.SEQREPO_INSTANCE_DIR
     if opts.wait_for_path:
         while not seqrepo_dir.exists():
-            _logger.info(f"{seqrepo_dir}: waiting for existence")
+            _logger.info("%s: waiting for existence", seqrepo_dir)
             time.sleep(WAIT_POLL_PERIOD)
-        _logger.info(f"{seqrepo_dir}: path found")
+        _logger.info("%s: path found", seqrepo_dir)
     _ = SeqRepo(seqrepo_dir.as_posix())  # test opening
 
     cxapp = connexion.App(__name__, debug=True)
@@ -80,8 +77,8 @@ def main():
     def refget_ui():
         return redirect("/refget/1/ui/")
 
-    _logger.info("Also watching " + str(spec_files))
-    cxapp.run(host="0.0.0.0", extra_files=spec_files)
+    _logger.info("Also watching %s", str(spec_files))
+    cxapp.run(host="0.0.0.0", extra_files=spec_files)  # noqa: S104
 
 
 if __name__ == "__main__":

@@ -43,10 +43,11 @@ def get_sequence_id(sr, query):
 
     seq_ids = get_sequence_ids(sr, query)
     if len(seq_ids) == 0:
-        _logger.warning(f"No sequence found for {query}")
+        _logger.warning("No sequence found for %s", query)
         return None
     if len(seq_ids) > 1:
-        raise RuntimeError(f"Multiple distinct sequences found for {query}")
+        msg = f"Multiple distinct sequences found for {query}"
+        raise RuntimeError(msg)
     return seq_ids.pop()  # exactly 1 id found
 
 
@@ -66,8 +67,7 @@ def get_sequence_ids(sr, query):
         aliases = list(sr.aliases.find_aliases(namespace=ns, alias=a))
         if aliases:
             break
-    seq_ids = list(set(a["seq_id"] for a in aliases))
-    return seq_ids
+    return list({a["seq_id"] for a in aliases})
 
 
 def problem(status, message):
@@ -96,13 +96,11 @@ def _generate_nsa_options(query):
 
     if ":" in query:
         # interpret as fully-qualified identifier
-        nsa_options = [tuple(query.split(sep=":", maxsplit=1))]
-        return nsa_options
+        return [tuple(query.split(sep=":", maxsplit=1))]
 
     namespaces = infer_namespaces(query)
     if namespaces:
-        nsa_options = [(ns, query) for ns in namespaces]
-        return nsa_options
+        return [(ns, query) for ns in namespaces]
 
     # if hex, try md5 and TRUNC512
     if re.match(r"^(?:[0-9A-Fa-f]{8,})$", query):

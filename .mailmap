@@ -1,0 +1,12 @@
+# I pick the account with the most modified files in git shortlog -sne
+# This is used by Git to consolidate the users who used multiple accounts
+Reece Hart <reecehart@gmail.com>
+Reece Hart <reece@biocmmons.org>
+James Stevenson <james.sharpsteen@gmail.com>
+Kyle Ferriter <kferrite@broadinstitute.org>
+Andreas Prlic <andreas.prlic@invitae.com>
+Ben Robinson <ben.robinson@invitae.com>
+Blake Peterman <blake@peterman.io>
+James Stevenson <james.stevenson@nationwidechildrens.org>
+Kori Kuzma <korikuzma@gmail.com>
+melissacline <melissa.s.cline@gmail.com>

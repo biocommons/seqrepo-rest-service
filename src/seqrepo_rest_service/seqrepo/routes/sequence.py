@@ -1,7 +1,6 @@
 import logging
-import re
 
-from connexion import NoContent, request
+from connexion import NoContent
 
 from ...threadglobals import get_seqrepo
 from ...utils import get_sequence_ids, problem
@@ -10,9 +9,8 @@ _logger = logging.getLogger(__name__)
 
 
 def get(alias, start=None, end=None):
-    if start is not None and end is not None:
-        if start > end:
-            return problem(422, "Invalid coordinates: start > end")
+    if start is not None and end is not None and start > end:
+        return problem(422, "Invalid coordinates: start > end")
     sr = get_seqrepo()
     seq_ids = get_sequence_ids(sr, alias)
     if not seq_ids:

@@ -1,6 +1,7 @@
+from importlib import metadata
+
 import biocommons.seqrepo
 import bioutils
-from importlib import metadata
 
 from ...threadglobals import get_seqrepo
 
