@@ -1,19 +1,33 @@
 [build-system]
 build-backend = "setuptools.build_meta"
-requires = ["setuptools >= 70.1", "setuptools_scm[toml] ~= 8.1"]
+requires = ["setuptools >= 80.0", "setuptools_scm[toml] >= 9.0"]
 
 [dependency-groups]
 dev = [
-  "deptry>=0.23",
-  "mkdocs-material>=9.6",
-  "mkdocs>=1.6",
-  "mkdocstrings[python]>=0.30",
-  "mypy>=1.17",
-  "pre-commit>=3.8",
-  "pytest-cov>=4.1",
-  "pytest>=7.4",
-  "ruff>=0.12",
-  "tox-uv>=1.28"
+  # code quality & formatting
+  "deptry>=0.25.1",
+  "mypy>=2.4.0",
+  "nox>=2026.8.17",
+  "prek>=0.5.5",
+  "ruff>=0.17.0",
+  "toml-sort>=0.25.0",
+  "uv-bump>=0.6.0",
+
+  # testing
+  "pytest>=9.1.1",
+  "pytest-cov>=7.1.0",
+  "pytest-recording>=0.14.0",
+  "vcrpy>=8.3.0",
+
+  # documentation
+  "mkdocs>=1.6.1",
+  "mkdocs-awesome-nav>=3.3.0",
+  "mkdocs-material>=9.7.7",
+  "mkdocstrings[python]>=1.0.7",
+
+  # misc dev tools
+  "ipython>=8.0.0",  # biocommons.seqrepo releases pin ipython<9
+  "jupyter>=1.1.1",
 ]
 
 [project]
@@ -21,14 +35,21 @@ authors = [
   {email = "biocommons-dev@googlegroups.com", name = "biocommons contributors"}
 ]
 classifiers = [
+  "Development Status :: 5 - Production/Stable",
   "Intended Audience :: Developers",
+  "Operating System :: OS Independent",
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Programming Language :: Python :: 3.15",
   "Programming Language :: Python",
+  "Topic :: Scientific/Engineering :: Bio-Informatics",
+  "Topic :: Scientific/Engineering :: Medical Science Apps.",
   "Topic :: Software Development :: Libraries :: Python Modules"
 ]
+# mandatory runtime dependencies only
 dependencies = [
   "Flask ~= 2.2",
   "biocommons.seqrepo ~= 0.6",
@@ -38,6 +59,13 @@ dependencies = [
 ]
 description = "SeqRepo REST Service"
 dynamic = ["version"]
+keywords = [
+  "biocommons",
+  "bioinformatics",
+  "genomics",
+  "refget",
+  "sequences"
+]
 license = "Apache-2.0"
 name = "seqrepo-rest-service"
 readme = "README.md"
@@ -47,32 +75,40 @@ requires-python = ">=3.11"
 seqrepo-rest-service = "seqrepo_rest_service.cli:main"
 
 [project.urls]
+Changelog = "https://github.com/biocommons/seqrepo-rest-service/releases"
 Documentation = "https://biocommons.github.io/seqrepo-rest-service/"
-Homepage = "https://biocommons.github.io/seqrepo-rest-service/"
-Issues = "https://github.com/biocommons/seqrepo-rest-service/issues"
-Repository = "https://github.com/biocommons/seqrepo-rest-service"
+Homepage = "https://github.com/biocommons/seqrepo-rest-service/"
+Issues = "https://github.com/biocommons/seqrepo-rest-service/issues/"
+Repository = "https://github.com/biocommons/seqrepo-rest-service/"
 
 [tool.coverage]
 
 [tool.coverage.report]
 exclude_lines = [
-  # Don't complain about missing debug-only code:
-  "def __repr__",
-  # Don't complain if non-runnable code isn't run:
-  "if __name__ == .__main__.:",
-  "if self.debug",
-  # Have to re-enable the standard pragma
-  "pragma: no cover",
-  # Don't complain if tests don't hit defensive assertion code:
-  "raise AssertionError",
-  "raise NotImplementedError"
+    # Have to re-enable the standard pragma
+    "pragma: no cover",
+
+    # Don't complain about missing debug-only code:
+    "def __repr__",
+    "if self.debug",
+
+    # Don't complain if tests don't hit defensive assertion code:
+    "raise AssertionError",
+    "raise NotImplementedError",
+
+    # Don't complain if non-runnable code isn't run:
+    "if __name__ == .__main__.:",
 ]
 show_missing = true
 skip_empty = true
 
 [tool.coverage.run]
 branch = true
-omit = ["*/test/*", "*/tests/*", "*_test.py"]
+omit = [
+  "*_test.py",
+  "*/test/*",
+  "*/tests/*",
+]
 source = ["src"]
 
 [tool.deptry]
@@ -85,16 +121,14 @@ mkdocs = "mkdocs"
 mkdocs-material = "mkdocs_material"
 mkdocstrings = "mkdocstrings"
 mypy = "mypy"
-pre-commit = "pre_commit"
 pytest = "pytest"
 pytest-cov = "pytest_cov"
 pyyaml = "yaml"
 ruff = "ruff"
-tox-uv = "tox_uv"
 ty = "ty"
 
 [tool.pytest.ini_options]
-addopts = "-s -v -x --strict-markers -m 'not extra' --doctest-modules --cov=src"
+addopts = "--doctest-modules --doctest-glob='*.rst' --doctest-glob='*.txt' -m 'not extra'"
 doctest_optionflags = [
   "ALLOW_BYTES",
   "ALLOW_UNICODE",
@@ -103,17 +137,18 @@ doctest_optionflags = [
   "NORMALIZE_WHITESPACE"
 ]
 markers = [
+  "extra: optional tests; deselect with -m 'not extra'",
   "network: tests that require network connectivity",
   "slow: slow tests that should be run infrequently",
   "vcr: tests with cached data"
 ]
-testpaths = ["tests"]
+strict_markers = true
+testpaths = ["src", "tests"]
 
 [tool.ruff]
-fix = true
 line-length = 100
 src = ["src", "tests"]
-target-version = "py39"
+target-version = "py311"
 
 [tool.ruff.format]
 docstring-code-format = true
@@ -138,7 +173,19 @@ fixable = [
   "SIM",
   "UP"
 ]
-ignore = ["E111", "E114", "E117", "E501", "E731", "PLR0913", "S321", "W191"]
+ignore = [
+  "E111",
+  "E114",
+  "E117",
+  "E501",
+  "E731",
+  "N801",
+  "N802",
+  "PLR0913",
+  "RET504",
+  "S321",
+  "W191",
+]
 select = [
   "A", # https://docs.astral.sh/ruff/rules/#flake8-builtins-a
   "ARG", # https://docs.astral.sh/ruff/rules/#flake8-unused-arguments-arg
@@ -168,11 +215,16 @@ select = [
   "YTT" # https://docs.astral.sh/ruff/rules/#flake8-2020-ytt
 ]
 
-[tool.ruff.lint.per-file-ignores]
-"tests/*" = ["S101"]
+[tool.ruff.lint.extend-per-file-ignores]
+"tests/**/*.py" = [
+  "PLR2004", # Magic value used in comparison
+  "S101", # Use of `assert` detected
+]
 
 [tool.setuptools]
 include-package-data = true
+package-dir = {"" = "src"}
+zip-safe = true
 
 [tool.setuptools.package-data]
 "*" = ["*.gz", "*.json", "*.yaml"]
