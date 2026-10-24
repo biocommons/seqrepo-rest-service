@@ -139,7 +139,7 @@ class StdOutPipeWorker(multiprocessing.Process):
             try:
                 val = self.stdout_queue.get(timeout=0.5)
                 print(val, file=self.ostream, end="")
-            except queue.Empty:  # noqa: PERF203
+            except queue.Empty:
                 pass
 
     def stop(self):
