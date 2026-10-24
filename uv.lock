@@ -1,5 +1,5 @@
 version = 1
-revision = 3
+revision = 5
 requires-python = ">=3.11"
 resolution-markers = [
     "python_full_version >= '3.15'",
@@ -291,15 +291,15 @@ wheels = [
 
 [[package]]
 name = "bioutils"
-version = "0.6.1"
+version = "0.6.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "attrs" },
     { name = "requests" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/50/d6/10fbd7127cd6618dae4041305313b672d2597a44c0da6a7e32b0e5eefec2/bioutils-0.6.1.tar.gz", hash = "sha256:6ad7a9b6da73beea798a935499339d8b60a434edc37dfc803474d2e93e0e64aa", size = 387598, upload-time = "2024-11-04T01:43:19.683Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/68/ff/016858412f71c6a1e187ef9af2a946e172cfd999a7bb3655e883e2134a63/bioutils-0.6.2.tar.gz", hash = "sha256:16dfdd03e3097ae40bc9fcc95e4ac91deb883aa27bca568ab45fd4fe5fb62da0", size = 585312, upload-time = "2026-10-14T22:11:09.454Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/15/b5/29234ceb28f4cb81c925145bb2edfb8105206243144f84d960478e255484/bioutils-0.6.1-py3-none-any.whl", hash = "sha256:9928297331b9fc0a4fd4235afdef9a80a0916d8b5c2811ab781bded0dad4b9b6", size = 313484, upload-time = "2024-11-04T01:43:17.544Z" },
+    { url = "https://files.pythonhosted.org/packages/b7/66/7972d72ed5aec7c3e73837200287d7393180cff8822dcbb2a90ee1eb51da/bioutils-0.6.2-py3-none-any.whl", hash = "sha256:002b8f334d380796fb1a043f68d0e9a2469d6d42b04205bcc212c7a5d2693ab6", size = 315648, upload-time = "2026-10-14T22:11:07.906Z" },
 ]
 
 [[package]]
