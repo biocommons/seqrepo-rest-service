@@ -1,21 +1,20 @@
 site_name: seqrepo-rest-service
 repo_url: https://github.com/biocommons/seqrepo-rest-service
 site_url: https://biocommons.github.io/seqrepo-rest-service
-site_description: Package Description
+site_description: SeqRepo REST Service
 site_author: Biocommons Contributors
 edit_uri: edit/main/docs/
 repo_name: biocommons/seqrepo-rest-service
 copyright: Maintained by <a href="https://biocommons.com">biocommons</a>.
 
-nav:
-  - Home: index.md
-  - Modules: modules.md
 plugins:
   - search
+  - awesome-nav
   - mkdocstrings:
       handlers:
         python:
-          paths: ["src/biocommons/example"]
+          options:
+            show_source: false
 theme:
   name: material
   feature:
