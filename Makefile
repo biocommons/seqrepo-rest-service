@@ -41,6 +41,11 @@ publish: build ## Publish package to PyPI
 	$(call INFO_MESSAGE, "Publish package to PyPI")
 	uv publish  # Requires UV_PUBLISH_TOKEN or Trusted Publishing setup
 
+.PHONY: docker-image
+docker-image: ## Build docker image biocommons/seqrepo-rest-service:latest
+	$(call INFO_MESSAGE, "Build docker image")
+	docker build -t biocommons/seqrepo-rest-service .
+
 ############################################################################
 #= FORMATTING, TESTING, AND CODE QUALITY
 
