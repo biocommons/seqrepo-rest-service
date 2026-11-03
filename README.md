@@ -87,28 +87,43 @@ endpoint.
 
 Fetch sequence by an accession:
 
-    $ curl -f http://0.0.0.0:5000/seqrepo/1/sequence/NP_001274413.1
+    curl -f http://0.0.0.0:5000/seqrepo/1/sequence/NP_001274413.1
+
+Output:
+
     MERSFVWLSCLDSDSCNLTFRLGEVESHACSPSLLWNLLTQYLPPGAGHILRTYNFPVLSCVSSCHLIGGKMPEN
 
 Or not:
 
-    $ curl -f http://0.0.0.0:5000/seqrepo/1/sequence/bogus
-    curl: (22) The requested URL returned error: 404 NOT FOUND
+    curl -f http://0.0.0.0:5000/seqrepo/1/sequence/bogus
+
+Output:
+
+    curl: (22) The requested URL returned error: 404
 
 Popular digests are also available:
 
-    $ curl -f http://0.0.0.0:5000/seqrepo/1/sequence/MD5:d52770ec477d0c9ee01fa034aff62cb4
+    curl -f http://0.0.0.0:5000/seqrepo/1/sequence/MD5:d52770ec477d0c9ee01fa034aff62cb4
+
+Output:
+
     MERSFVWLSCLDSDSCNLTFRLGEVESHACSPSLLWNLLTQYLPPGAGHILRTYNFPVLSCVSSCHLIGGKMPEN
 
 With range:
 
     # 👉 Seqrepo uses interbase coordinates.
-    $ curl -f "http://0.0.0.0:5000/seqrepo/1/sequence/NP_001274413.1?start=5&end=10"
+    curl -f "http://0.0.0.0:5000/seqrepo/1/sequence/NP_001274413.1?start=5&end=10"
+
+Output:
+
     VWLSC
 
 ### Fetch Metadata
 
-    $ curl -f "http://0.0.0.0:5000/seqrepo/1/metadata/GRCh38:1"
+    curl -f "http://0.0.0.0:5000/seqrepo/1/metadata/GRCh38:1"
+
+Output:
+
     {
       "added": "2016-08-27T21:17:00Z",
       "aliases": [
@@ -143,7 +158,10 @@ Create a Python virtual environment, install dependencies, install git hooks (pr
 ensure consistency with the CI/CD pipelines.  Type `make` to see a list of
 supported targets.  A subset are listed here:
 
-    » make
+    make
+
+Output:
+
     🌟🌟 biocommons conventional make targets 🌟🌟
 
     Using these targets promots consistency between local development and ci/cd commands.
@@ -197,7 +215,7 @@ Codecov's `codecov/project` status fails when coverage drops more than 0.5% from
 
 Once installed as above, you should be able to:
 
-    $ seqrepo-rest-service /usr/local/share/seqrepo/2024-12-20
+    seqrepo-rest-service /usr/local/share/seqrepo/2024-12-20
 
 The navigate to the URL shown in the console output.
 
@@ -213,7 +231,10 @@ To build a docker image in this repo:
 
 This will create biocommons/seqrepo-rest-service:latest, like this:
 
-    $ docker images
+    docker images
+
+Output:
+
     REPOSITORY                        TAG     IMAGE ID       CREATED          SIZE
     biocommons/seqrepo-rest-service   latest  ad9ca051c5c9   2 minutes ago    627MB
 
@@ -241,7 +262,10 @@ Where the command line options are as follows:
 
 You should then be able to fetch a test sequence like this:
 
-    $ curl 'http://127.0.0.1:5000/seqrepo/1/sequence/refseq:NM_000551.3?end=20'
+    curl 'http://127.0.0.1:5000/seqrepo/1/sequence/refseq:NM_000551.3?end=20'
+
+Output:
+
     CCTCGCCTCCGTTACAACGG
 
 If things aren't working, check the logs with `docker logs -f seqrepo-rest-service`.
