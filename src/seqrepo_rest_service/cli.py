@@ -14,17 +14,24 @@ from flask import redirect
 
 WAIT_POLL_PERIOD = 15  # seconds between polling for SEQREPO PATH
 
+# Same defaults as biocommons.seqrepo: $SEQREPO_ROOT_DIR (or /usr/local/share/seqrepo)/latest
+DEFAULT_SEQREPO_INSTANCE_DIR = (
+    pathlib.Path(os.environ.get("SEQREPO_ROOT_DIR", "/usr/local/share/seqrepo")) / "latest"
+)
+
 
 _logger = logging.getLogger(__name__)
 resources = importlib.resources.files(__package__)
 
 
 def _parse_opts():
-    ap = argparse.ArgumentParser(description=__doc__.split()[0])
+    ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument(
         "SEQREPO_INSTANCE_DIR",
         type=pathlib.Path,
-        help="SeqRepo instance directory (e.g., /usr/local/share/seqrepo/2021-01-29)",
+        nargs="?",
+        default=DEFAULT_SEQREPO_INSTANCE_DIR,
+        help="SeqRepo instance directory (default: %(default)s)",
     )
     ap.add_argument(
         "--wait-for-path",
