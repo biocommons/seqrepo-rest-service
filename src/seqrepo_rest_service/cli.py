@@ -76,7 +76,7 @@ def main():
     def refget_ui():
         return redirect("/refget/1/ui/")
 
-    cxapp.run(host="0.0.0.0")  # noqa: S104
+    cxapp.run(host="0.0.0.0", port=5000)  # noqa: S104
 
 
 if __name__ == "__main__":
