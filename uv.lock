@@ -2813,7 +2813,7 @@ requires-dist = [
 [package.metadata.requires-dev]
 dev = [
     { name = "deptry", specifier = ">=0.25.1" },
-    { name = "ipython", specifier = ">=8.0.0" },
+    { name = "ipython", specifier = ">=8.0.0,<9" },
     { name = "jupyter", specifier = ">=1.1.1" },
     { name = "mkdocs", specifier = ">=1.6.1" },
     { name = "mkdocs-awesome-nav", specifier = ">=3.3.0" },
