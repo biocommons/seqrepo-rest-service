@@ -52,6 +52,12 @@ def main():
         _logger.info("%s: path found", seqrepo_dir)
     _ = SeqRepo(seqrepo_dir.as_posix())  # test opening
 
+    cxapp = create_app(seqrepo_dir)
+    cxapp.run(host="0.0.0.0", port=5000)  # noqa: S104
+
+
+def create_app(seqrepo_dir: pathlib.Path) -> connexion.App:
+    """Build the connexion app serving the seqrepo and refget APIs for seqrepo_dir"""
     cxapp = connexion.App(__name__)
     cxapp.app.url_map.strict_slashes = False
     cxapp.app.config["seqrepo_dir"] = seqrepo_dir
@@ -76,7 +82,7 @@ def main():
     def refget_ui():
         return redirect("/refget/1/ui/")
 
-    cxapp.run(host="0.0.0.0", port=5000)  # noqa: S104
+    return cxapp
 
 
 if __name__ == "__main__":
