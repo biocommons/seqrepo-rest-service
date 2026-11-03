@@ -21,9 +21,11 @@ class HTTPError(Exception):
         super().__init__(f"HTTP {status_code}: {message}")
 
 
-def _validate_range_header(range_header, start: int | None = None, end: int | None = None):
+def _parse_range_header(
+    range_header, start: int | None = None, end: int | None = None
+) -> tuple[int, int] | None:
     """
-    Validate the range header against parameters
+    Parse and validate the range header against parameters
 
     Raises an HTTPError if:
     - A range header is provided along with `start` or `end` query parameters.
@@ -33,21 +35,24 @@ def _validate_range_header(range_header, start: int | None = None, end: int | No
     :param range_header: string representing the range
     :param start: optional start coordinate
     :param end: optional end coordinate
+    :returns: (start, end) as interbase coordinates, or None if no range header
     :raises HTTPError: on invalid header or conflicting parameters
     """
-    if range_header:
-        _logger.debug("Received header `Range: %s`", range_header)
-        if start is not None or end is not None:
-            raise HTTPError(400, "May not send Range header with start and/or end query parameter")
+    if not range_header:
+        return None
+    _logger.debug("Received header `Range: %s`", range_header)
+    if start is not None or end is not None:
+        raise HTTPError(400, "May not send Range header with start and/or end query parameter")
 
-        m = range_re.match(range_header)
-        if not m:
-            raise HTTPError(400, f"Could not parse range header {range_header}")
+    m = range_re.match(range_header)
+    if not m:
+        raise HTTPError(400, f"Could not parse range header {range_header}")
 
-        start, end = int(m.group(1)), int(m.group(2)) + 1
-        _logger.debug("Parsed `%s` as (%i, %i)", range_header, start, end)
-        if start > end:
-            raise HTTPError(416, "Range queries may specify start > end")
+    first, last = int(m.group(1)), int(m.group(2))  # inclusive byte positions
+    if first > last:
+        raise HTTPError(416, "Range queries may not specify first byte > last byte")
+    _logger.debug("Parsed `%s` as (%i, %i)", range_header, first, last + 1)
+    return first, last + 1
 
 
 def _validate_start_and_end(
@@ -104,7 +109,7 @@ def get(id_: str, start=None, end=None):
 
     range_header = request.headers.get("Range", None)
     try:
-        _validate_range_header(range_header, start, end)
+        range_coords = _parse_range_header(range_header, start, end)
     except HTTPError as http_error:
         return problem(http_error.status_code, http_error.message)
 
@@ -112,13 +117,15 @@ def get(id_: str, start=None, end=None):
     seq_id = get_sequence_id(sr, id_)
     if not seq_id:
         return NoContent, 404
+    if range_coords:
+        start, end = range_coords
     try:
         _validate_start_and_end(sr, seq_id, range_header, start, end)
     except HTTPError as http_error:
         return problem(http_error.status_code, http_error.message)
 
     try:
-        status = 206 if ((start or end) and range_header) else 200
+        status = 206 if range_coords else 200
         return sr.sequences.fetch(seq_id, start, end), status
     except KeyError:
         return NoContent, 404

@@ -56,3 +56,33 @@ def test_refget_metadata(client, sr):
     resp = client.get(f"/refget/1/sequence/{GA4GH_ID}/metadata")
     assert resp.status_code == 200
     assert resp.json()["metadata"]["length"] == len(sr.sequences.fetch(SEQ_ID))
+
+
+@pytest.mark.parametrize(
+    ("range_header", "start", "end"),
+    [
+        ("bytes=0-9", 0, 10),
+        ("bytes=10-10", 10, 11),
+        ("bytes=5380-5999", 5380, 5386),  # past end: truncated to sequence length
+    ],
+)
+def test_refget_sequence_range(client, sr, range_header, start, end):
+    resp = client.get(f"/refget/1/sequence/{GA4GH_ID}", headers={"Range": range_header})
+    assert resp.status_code == 206
+    assert resp.text == sr.sequences.fetch(SEQ_ID, start, end)
+
+
+@pytest.mark.parametrize(
+    ("range_header", "params", "status"),
+    [
+        ("bytes=5-4", {}, 416),  # first byte > last byte
+        ("bytes=5386-5390", {}, 416),  # starts at/after sequence end
+        ("bytes=0-", {}, 400),  # unsupported/malformed
+        ("bytes=0-9", {"start": 0}, 400),  # conflicts with query params
+    ],
+)
+def test_refget_sequence_range_errors(client, range_header, params, status):
+    resp = client.get(
+        f"/refget/1/sequence/{GA4GH_ID}", headers={"Range": range_header}, params=params
+    )
+    assert resp.status_code == status
