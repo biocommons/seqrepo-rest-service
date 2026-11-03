@@ -52,16 +52,13 @@ def main():
         _logger.info("%s: path found", seqrepo_dir)
     _ = SeqRepo(seqrepo_dir.as_posix())  # test opening
 
-    cxapp = connexion.App(__name__, debug=True)
+    cxapp = connexion.App(__name__)
     cxapp.app.url_map.strict_slashes = False
     cxapp.app.config["seqrepo_dir"] = seqrepo_dir
-
-    spec_files = []
 
     # seqrepo interface
     spec_fn = resources / "seqrepo" / "openapi.yaml"
     cxapp.add_api(str(spec_fn), validate_responses=True, strict_validation=True)
-    spec_files += [spec_fn]
 
     @cxapp.route("/")
     @cxapp.route("/seqrepo")
@@ -71,14 +68,12 @@ def main():
     # refget interface
     spec_fn = resources / "refget" / "refget-openapi.yaml"
     cxapp.add_api(str(spec_fn), validate_responses=True, strict_validation=True)
-    spec_files += [spec_fn]
 
     @cxapp.route("/refget")
     def refget_ui():
         return redirect("/refget/1/ui/")
 
-    _logger.info("Also watching %s", str(spec_files))
-    cxapp.run(host="0.0.0.0", extra_files=spec_files)  # noqa: S104
+    cxapp.run(host="0.0.0.0")  # noqa: S104
 
 
 if __name__ == "__main__":
