@@ -67,7 +67,10 @@ def main():
 
     # refget interface
     spec_fn = resources / "refget" / "refget-openapi.yaml"
-    cxapp.add_api(str(spec_fn), validate_responses=True, strict_validation=True)
+    # pythonic_params maps spec param `id` to handler arg `id_` (avoids shadowing builtin)
+    cxapp.add_api(
+        str(spec_fn), validate_responses=True, strict_validation=True, pythonic_params=True
+    )
 
     @cxapp.route("/refget")
     def refget_ui():
