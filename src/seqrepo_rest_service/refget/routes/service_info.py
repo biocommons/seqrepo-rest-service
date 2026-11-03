@@ -1,12 +1,13 @@
 import biocommons.seqrepo
 import bioutils
+from flask import current_app
 
 from ... import __version__
 from ...threadglobals import get_seqrepo
 
 
 def get():
-    sr = get_seqrepo()
+    get_seqrepo()  # ensure seqrepo opens
 
     return {
         "service": {
@@ -22,7 +23,7 @@ def get():
             },
             "seqrepo": {
                 "version": biocommons.seqrepo.__version__,
-                "root": sr._root_dir,
+                "root": str(current_app.config["seqrepo_dir"]),
                 "url": "https://github.com/biocommons/biocommons.seqrepo/",
             },
             "bioutils": {
