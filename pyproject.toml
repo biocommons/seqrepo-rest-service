@@ -55,7 +55,7 @@ dependencies = [
   "biocommons.seqrepo ~= 0.6",
   "bioutils",
   "coloredlogs",
-  "connexion[swagger-ui] ~= 2.2"
+  "connexion[swagger-ui]>=2.2,<4.0"
 ]
 description = "SeqRepo REST Service"
 dynamic = ["version"]
