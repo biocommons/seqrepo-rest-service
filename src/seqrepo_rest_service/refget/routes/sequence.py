@@ -89,11 +89,11 @@ def _validate_start_and_end(
             )
 
 
-def get(query: str, start=None, end=None):
+def get(id_: str, start=None, end=None):
     """
     Retrieve a sequence or a subsequence
 
-    :param query: string identifying the sequence
+    :param id_: string identifying the sequence
     :param start: optional start coordinate
     :param end: optional end coordinate
     return: tuple of (sequence bytes or NoContent, HTTP status code)
@@ -109,7 +109,7 @@ def get(query: str, start=None, end=None):
         return problem(http_error.status_code, http_error.message)
 
     sr = get_seqrepo()
-    seq_id = get_sequence_id(sr, query)
+    seq_id = get_sequence_id(sr, id_)
     if not seq_id:
         return NoContent, 404
     try:

@@ -8,14 +8,14 @@ from ...utils import base64url_to_hex, get_sequence_id, problem, valid_content_t
 _logger = logging.getLogger(__name__)
 
 
-def get(query: str):
+def get(id_: str):
     accept_header = request.headers.get("Accept", None)
     if accept_header and accept_header not in valid_content_types:
         _logger.warning("%s not valid", accept_header)
         return problem(406, "Invalid Accept header")
 
     sr = get_seqrepo()
-    seq_id = get_sequence_id(sr, query)
+    seq_id = get_sequence_id(sr, id_)
     if not seq_id:
         return NoContent, 404
     seqinfo = sr.sequences.fetch_seqinfo(seq_id)
