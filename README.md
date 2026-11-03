@@ -217,6 +217,9 @@ Once installed as above, you should be able to:
 
     seqrepo-rest-service /usr/local/share/seqrepo/2024-12-20
 
+The instance directory is optional and defaults to `$SEQREPO_ROOT_DIR/latest` (`SEQREPO_ROOT_DIR` defaults to
+`/usr/local/share/seqrepo`).
+
 The navigate to the URL shown in the console output.
 
 ## Building and running a docker image
@@ -240,25 +243,29 @@ Output:
 
 This docker image is periodically pushed to docker hub.
 
-Invoke the docker image like this this:
+Invoke the docker image like this:
 
     docker run \
       --name seqrepo-rest-service \
       --detach --rm -p 5000:5000 \
-      -v /usr/local/share/seqrepo/2024-12-20:/mnt/seqrepo \
-      biocommons/seqrepo-rest-service \
-      seqrepo-rest-service /mnt/seqrepo
+      -v /usr/local/share/seqrepo:/usr/local/share/seqrepo:ro \
+      biocommons/seqrepo-rest-service
 
 Where the command line options are as follows:
 
-- `--name seqrepo-rest-service:` Assigns the name `seqrepo-rest-service` to the container
-- `--detach:` Runs the container in background and prints the container ID
-- `--rm:` Automatically removes the container when it exits
-- `-p 5000:5000:` Publishes a container’s port(s), `5000:5000`, to the local host
-- `-v /usr/local/share/seqrepo/2024-12-20:/mnt/seqrepo`: Binds the local volume, `/usr/local/share/seqrepo/2024-12-20` to the address `/mnt/seqrepo` within the container
-- `biocommons/seqrepo-rest-service:` Specifies the docker image (as built above)
-- `seqrepo-rest-service:` Specifies the console name or entry point `seqrepo_rest_service.cli:main`
-- `/mnt/seqrepo:` Specifies the SeqRepo instance directory, as corresponding to the volume above
+- `--name seqrepo-rest-service`: Assigns the name `seqrepo-rest-service` to the container
+- `--detach`: Runs the container in background and prints the container ID
+- `--rm`: Automatically removes the container when it exits
+- `-p 5000:5000`: Publishes the container's port 5000 to the local host
+- `-v /usr/local/share/seqrepo:/usr/local/share/seqrepo:ro`: Mounts the local SeqRepo root directory, read-only,
+  at the same path within the container
+- `biocommons/seqrepo-rest-service`: Specifies the docker image (as built above)
+
+By default, the service serves the `latest` instance in the SeqRepo root directory, `$SEQREPO_ROOT_DIR/latest`
+(`SEQREPO_ROOT_DIR` defaults to `/usr/local/share/seqrepo`), which matches SeqRepo's own defaults. To serve a
+specific instance, pass its path within the container as the command, e.g.:
+
+    docker run ... biocommons/seqrepo-rest-service seqrepo-rest-service /usr/local/share/seqrepo/2024-12-20
 
 You should then be able to fetch a test sequence like this:
 
