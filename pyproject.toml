@@ -26,7 +26,7 @@ dev = [
   "mkdocstrings[python]>=1.0.7",
 
   # misc dev tools
-  "ipython>=8.0.0,<9",  # biocommons.seqrepo releases pin ipython<9
+  "ipython>=8.0.0,<10",  # biocommons.seqrepo releases pin ipython<9
   "jupyter>=1.1.1",
 ]
 
